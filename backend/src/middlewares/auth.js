@@ -8,19 +8,21 @@ const generateAuthToken = (data) => {
 };
 
 const auth = (req, res, next) => {
-  const authHeader = req.headers.authorization;
+  const authorization = req.headers.authorization;
 
-  if (!authHeader) {
-    return res.status(401).json({ error: "no autenticado" });
+  if (!authorization) {
+    const error = new Error("Token no válido");
+    return res.status(401).json({ msg: error.message });
   }
 
   const token = authHeader.split(" ")[1];
   jwt.verify(token, config.JWT_PRIVATE_KEY, (err, decoded) => {
     if (err) {
-      return res.status(403).json({ error: "no autorizado" });
+      return res.status(403).json({ msg: "No autorizado" });
     }
     req.user = decoded.data;
-
+    console.log("auth middlew", req.user);
+    //TODO: quitar datos sensibles de ususario
     next();
   });
 };

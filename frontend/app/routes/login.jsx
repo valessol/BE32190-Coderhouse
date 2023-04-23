@@ -7,10 +7,9 @@ import {
 import Form from "../components/form";
 import { loginFormConfig } from "../constants/forms";
 import { validateLoginData } from "../utils/formValidations";
-import Error from "../components/message";
-import { Response, redirect } from "@remix-run/node";
 import { loginUser } from "../api/auth.server";
 import { useEffect, useState } from "react";
+import Message from "../components/message";
 
 export const meta = () => {
   return [
@@ -28,47 +27,42 @@ export const action = async ({ request }) => {
 
   if (errors.length) return errors;
 
-  const loginData = await loginUser(data);
-  const { user, access_token } = loginData;
+  const userData = await loginUser(data);
 
-  if (!user) throw new Response("Usuario no encontrado");
-  if (!access_token) throw new Response("No autorizado");
-
-  return redirect("/", {
-    headers: {
-      authorization: `Bearer ${access_token}`,
-    },
-  });
+  if (userData.type === "error") {
+    errors.push(userData.text);
+    return errors;
+  }
+  return userData;
 };
 
 const Login = () => {
-  // const [data, setData] = useState({});
-  // const [errors, setErrors] = useState([]);
-  // const { setAuthUser } = useOutletContext();
-  // const actionData = useActionData();
+  const [messages, setMessages] = useState([]);
+  const { setAuthUser } = useOutletContext();
+  const actionData = useActionData();
   // const navigate = useNavigate();
-  const errors = useActionData();
 
-  // useEffect(() => {
-  //   if (actionData?.data) setData(actionData.data);
-  //   if (actionData?.errors) setErrors(actionData.errors);
-  // }, [actionData]);
-
-  // console.log(data);
-  // useEffect(() => {
-  //   if (Object.keys(data) && data.access_token) {
-  //     setAuthUser(true);
-  //     navigate("/");
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (actionData && Array.isArray(actionData)) {
+      const errorMessages = actionData.map((error) => {
+        return { text: error, type: "error" };
+      });
+      setMessages(errorMessages);
+    } else {
+      setMessages([]);
+      setAuthUser(actionData);
+    }
+  }, [actionData]);
 
   return (
     <>
       <h2 className="heading">Iniciar sesión</h2>
       <main className="contenedor">
         <div className="bg-white shadow rounded-md md:w-3/4 mx-auto px-5 py-10 mt-20">
-          {errors?.length
-            ? errors.map((error, index) => <Error key={index}>{error}</Error>)
+          {messages.length
+            ? messages.map((msg, index) => (
+                <Message key={index} type={msg.type} text={msg.text} />
+              ))
             : null}
           <RemixForm method="POST" noValidate>
             <Form options={loginFormConfig} />

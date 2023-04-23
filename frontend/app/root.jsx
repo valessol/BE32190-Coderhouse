@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Meta,
   Links,
@@ -12,6 +11,7 @@ import stylesheet from "~/tailwind.css";
 import styles from "~/styles/index.css";
 import Header from "~/components/header";
 import Footer from "~/components/Footer";
+import AuthContext from "./context/auth";
 
 export const meta = () => {
   return [
@@ -52,10 +52,9 @@ export const links = () => {
 };
 
 const App = () => {
-  const [authUser, setAuthUser] = useState(false);
   return (
     <Document>
-      <Outlet context={{ authUser, setAuthUser }} />
+      <Outlet context={AuthContext()} />
     </Document>
   );
 };
