@@ -1,14 +1,15 @@
+import axios from "axios";
+
 export const getAllProducts = async () => {
-  const fetchedData = await fetch(`${process.env.API_URL}/products`);
-  const data = await fetchedData.json();
+  const { data } = await axios(`${process.env.API_URL}/products`);
 
   const formatData = () => {
     return data.map((d) => ({
       ...d,
-      imageUrl: `${process.env.CLOUDINARY_BASE_URL}/v1680120548/GuitarLA/${d.url}.jpg`,
+      imageUrl: `${process.env.CLOUDINARY_BASE_URL}/GuitarLA/${d.url}.jpg`,
     }));
   };
-
+  console.log(formatData());
   return formatData();
 };
 
@@ -25,7 +26,7 @@ export const getProductById = async (id) => {
   const formatData = () => {
     return {
       ...data,
-      imageUrl: `${process.env.CLOUDINARY_BASE_URL}/v1680120548/GuitarLA/${data.url}.jpg`,
+      imageUrl: `${process.env.CLOUDINARY_BASE_URL}/GuitarLA/${data.url}.jpg`,
     };
   };
 

@@ -1,7 +1,7 @@
 import { Link } from "@remix-run/react";
 
 const Product = ({ data }) => {
-  const { id, description, price, title, imageUrl } = data;
+  const { _id, description, price, title, imageUrl } = data;
 
   return (
     <div className="guitarra">
@@ -11,7 +11,7 @@ const Product = ({ data }) => {
         <p className="descripcion">{description}</p>
         <p className="precio">${price}</p>
 
-        <Link className="enlace" to={`/productos/${id}`}>
+        <Link className="enlace" to={`/productos/${_id}`}>
           Ver producto
         </Link>
       </div>

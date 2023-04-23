@@ -4,12 +4,12 @@ import Product from "./product";
 const ProductsList = ({ data }) => {
   return (
     <>
-      <h2 className="heading">Guitarras</h2>
+      <h2 className="heading">Productos</h2>
 
       {data?.length && (
         <div className="guitarras-grid">
-          {data.map((guitarra) => (
-            <Product key={guitarra.url} data={guitarra} />
+          {data.map((prod) => (
+            <Product key={prod.url} data={prod} />
           ))}
         </div>
       )}

@@ -1,98 +1,122 @@
 [
   {
-    "id": 1,
+    "_id": 1,
     "title": "Vai",
     "price": 359,
     "description": "Ut malesuada vitae neque sit amet congue. Suspendisse potenti. Mauris …",
     "url": "guitarra_01_jiefj2",
+    "stock": 8,
+    "category": "instrumentos",
     "timestamp": 1680285084762
   },
   {
-    "id": 2,
+    "_id": 2,
     "title": "Clapton",
     "price": 359,
     "description": "Ut malesuada vitae neque sit amet congue. Suspendisse potenti. Mauris …",
     "url": "guitarra_02_sos2er",
+    "stock": 8,
+    "category": "instrumentos",
     "timestamp": 1680285084762
   },
   {
-    "id": 3,
+    "_id": 3,
     "title": "Page",
     "price": 359,
     "description": "Ut malesuada vitae neque sit amet congue. Suspendisse potenti. Mauris …",
     "url": "guitarra_03_dxtmfo",
+    "stock": 8,
+    "category": "instrumentos",
     "timestamp": 1680285084762
   },
   {
-    "id": 4,
+    "_id": 4,
     "title": "Beck",
     "price": 359,
     "description": "Ut malesuada vitae neque sit amet congue. Suspendisse potenti. Mauris …",
     "url": "guitarra_04_d7kdoq",
+    "stock": 8,
+    "category": "instrumentos",
     "timestamp": 1680285084762
   },
   {
-    "id": 5,
+    "_id": 5,
     "title": "Townshend",
     "price": 359,
     "description": "Ut malesuada vitae neque sit amet congue. Suspendisse potenti. Mauris …",
     "url": "guitarra_05_kphf0j",
+    "stock": 8,
+    "category": "instrumentos",
     "timestamp": 1680285084762
   },
   {
-    "id": 6,
+    "_id": 6,
     "title": "Morello",
     "price": 359,
     "description": "Ut malesuada vitae neque sit amet congue. Suspendisse potenti. Mauris …",
     "url": "guitarra_06_v14nda",
+    "stock": 8,
+    "category": "instrumentos",
     "timestamp": 1680285084762
   },
   {
-    "id": 7,
+    "_id": 7,
     "title": "Borland",
     "price": 359,
     "description": "Ut malesuada vitae neque sit amet congue. Suspendisse potenti. Mauris …",
     "url": "guitarra_07_xqd5z8",
+    "stock": 8,
+    "category": "instrumentos",
     "timestamp": 1680285084762
   },
   {
-    "id": 8,
+    "_id": 8,
     "title": "Cobain",
     "price": 359,
     "description": "Ut malesuada vitae neque sit amet congue. Suspendisse potenti. Mauris …",
     "url": "guitarra_08_s3h5eq",
+    "stock": 8,
+    "category": "instrumentos",
     "timestamp": 1680285084762
   },
   {
-    "id": 9,
+    "_id": 9,
     "title": "Dale",
     "price": 359,
     "description": "Ut malesuada vitae neque sit amet congue. Suspendisse potenti. Mauris …",
     "url": "guitarra_09_lsq18j",
+    "stock": 8,
+    "category": "instrumentos",
     "timestamp": 1680285084762
   },
   {
-    "id": 10,
+    "_id": 10,
     "title": "Young",
     "price": 359,
     "description": "Ut malesuada vitae neque sit amet congue. Suspendisse potenti. Mauris …",
     "url": "guitarra_10_zc4tma",
+    "stock": 8,
+    "category": "instrumentos",
     "timestamp": 1680285084762
   },
   {
-    "id": 11,
+    "_id": 11,
     "title": "Keith",
     "price": 359,
     "description": "Ut malesuada vitae neque sit amet congue. Suspendisse potenti. Mauris …",
     "url": "guitarra_11_jxf03o",
+    "stock": 8,
+    "category": "instrumentos",
     "timestamp": 1680285084762
   },
   {
-    "id": 12,
+    "_id": 12,
     "title": "Blackmore",
     "price": 359,
     "description": "Ut malesuada vitae neque sit amet congue. Suspendisse potenti. Mauris …",
     "url": "guitarra_12_xzmjnz",
+    "stock": 8,
+    "category": "instrumentos",
     "timestamp": 1680285084762
   }
 ]
