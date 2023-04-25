@@ -1,143 +1,141 @@
 const DAOFactory = require("../models/DAOs/DAOFactory.js");
+const convertToDTO = require("../models/DTOs/DTO.js");
 const Cart = require("../models/model/Cart.js");
 const cartsSchema = require("../models/schemas/carts.js");
 
-class CartsServices {
-  static instance;
+const persistence = DAOFactory.get("carts", cartsSchema);
 
-  constructor() {
-    this.cartServices = DAOFactory.get("carts", cartsSchema);
+const validateCart = (cart) => {
+  try {
+    Cart.validate(cart);
+    return true;
+  } catch (error) {
+    throw new Error("Carrito no válido");
   }
+};
 
-  static getInstance() {
-    if (!this.instance) {
-      this.instance = new CartsServices();
-    }
-    return this.instance;
-  }
-
-  static validateCart(cart) {
-    try {
-      Cart.validate(cart);
-      return true;
-    } catch (error) {
-      throw new Error("Carrito no válido");
-    }
-  }
-
-  static async existCart(cartId) {
-    const carts = await this.getCartById(cartId);
-    return carts.some((cart) => cart._id === cartId);
-  }
-
-  static createCart() {
-    return {
-      id: this.cartServices.generateId(),
+const createCart = async (userId = "") => {
+  try {
+    const newCart = {
       products: [],
-      timestamp: new Date(),
+      userId,
     };
+
+    return await persistence.saveItem(newCart, { userId });
+  } catch (error) {
+    return error.message;
   }
+};
 
-  getCarts = async () => {
-    try {
-      return await this.cartServices.getItems();
-    } catch (err) {
-      console.log(err);
+const getCarts = async () => {
+  try {
+    return await persistence.getItems();
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const getCartById = async (cartId) => {
+  try {
+    return await persistence.getById(cartId);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const getCartByUserId = async (userId) => {
+  try {
+    const carts = await getCarts();
+    const selectedCart = carts.find((cart) => cart.userId === userId);
+
+    if (selectedCart) return convertToDTO(selectedCart, "carts");
+    return new Error("no existe carrito para el usuario seleccionado");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const saveProductOnCart = async (product, userId) => {
+  try {
+    let cart = {};
+
+    if (userId) cart = await getCartByUserId(userId);
+    else cart = await createCart();
+
+    const existProductOnCart = cart.products.find(
+      (prod) => prod._id === product._id
+    );
+
+    if (existProductOnCart)
+      cart.products = [
+        ...cart.products.filter((prod) => prod._id !== product._id),
+        product,
+      ];
+    else cart.products = [...cart.products, product];
+
+    const options = { _id: cart._id };
+
+    if (!validateCart(cart)) {
+      return new Error("formato de post inválido");
     }
-  };
+    await persistence.saveItem(cart, options);
+    return cart;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-  getCartById = async (cartId) => {
-    try {
-      return await this.cartServices.getById(cartId);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+const updateProductOnCart = async (userId, productId, product) => {
+  try {
+    const cart = await getCartByUserId(userId);
+    const _id = cart._id;
+    const oldProduct = cart.products.find((prod) => prod._id === productId);
 
-  getProductsOnCart = async (cartId) => {
-    try {
-      const cart = await this.getCartById(cartId);
-      return cart.products;
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    const filteredProducts = cart.products.filter(
+      (prod) => prod._id !== productId
+    );
 
-  getProduct = async (cartId, productId) => {
-    try {
-      const cart = await this.getCartById(cartId);
-      return cart.products.find((product) => product._id === productId);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    let newProduct;
+    let newCart;
 
-  saveProductOnCart = async (product, cartId) => {
-    try {
-      let cart;
-      if (cartId) {
-        cart = await this.getCartById(cartId);
-      } else cart = CartsServices.createCart();
-
-      cart.products = [...cart.products, product];
-
-      const options = { id: cart.id };
-
-      if (!CartsServices.validateCart(cart)) {
-        return new Error("formato de post inválido");
-      }
-      return await this.services.saveItem(cart, options);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  updateProductOnCart = async (cartId, product) => {
-    try {
-      const oldCart = await this.getCartById(cartId);
-      const _id = oldCart._id;
-      const oldProduct = oldCart.products.find(
-        (prod) => prod._id === product._id
-      );
-
-      const filteredProducts = oldCart.products.filter(
-        (prod) => prod._id === product._id
-      );
-      const newProduct = { ...oldProduct, ...product };
-
-      const newCart = {
-        ...oldCart,
+    if (Object.keys(product).length) {
+      newProduct = { ...oldProduct, ...product };
+      newCart = {
+        ...cart,
         products: [...filteredProducts, newProduct],
       };
-      return await this.services.updateItem(_id, newCart);
-    } catch (err) {
-      console.log(err);
+    } else {
+      newCart = {
+        ...cart,
+        products: [...filteredProducts],
+      };
     }
-  };
 
-  deleteProductOnCart = async (cartId, productId) => {
-    try {
-      const cart = await this.getCartById(cartId);
-      const _id = cart._id;
-      const filteredProducts = cart.products.filter(
-        (prod) => prod._id !== productId
-      );
-      const newCart = { ...cart, products: filteredProducts };
-      return await this.services.updateItem(_id, newCart);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    await persistence.updateItem(_id, newCart);
+    return newCart;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
-  deleteCart = async (cartId) => {
-    try {
-      const cart = await this.getCartById(cartId);
-      const _id = cart._id;
-      return await this.services.deleteItem(_id);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}
+const deleteCart = async (userId) => {
+  try {
+    const cart = await getCartByUserId(userId);
+    const _id = cart._id;
 
-module.exports = CartsServices.getInstance();
+    await persistence.deleteItem(_id);
+    return cart;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = {
+  getCartByUserId,
+  createCart,
+  saveProductOnCart,
+  getCarts,
+  getCartById,
+  updateProductOnCart,
+  deleteCart,
+};

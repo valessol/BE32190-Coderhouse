@@ -9,7 +9,7 @@ const authController = new AuthController();
 router.post("/register", authController.registerUser);
 router.post("/login", authController.login);
 router.post(
-  "/confirmAccount/:account-token",
+  "/confirm-account/:account-token",
   authController.checkAccountVerificationToken
 );
 router.get("/", auth, authController.authenticateUser);

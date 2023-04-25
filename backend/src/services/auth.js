@@ -91,9 +91,33 @@ const checkUserAccountToken = async (token) => {
   }
 };
 
+// const checkActiveSession = async (token) => {
+//   try {
+//     const { email, password } = userData;
+//     const salt = await genSalt(10);
+//     const hash = await getHash(password, salt);
+
+//     const newUser = setDefaultAttr({
+//       ...userData,
+//       password: hash,
+//     });
+
+//     if (!validateUser(newUser)) {
+//       return new Error("formato de usuario inválido");
+//     }
+
+//     const savedUser = await services.saveItem(newUser, { email });
+//     // TODO: sacar los datos sensibles del usuario y enviar mail
+//     return savedUser;
+//   } catch (err) {
+//     throw new Error(err);
+//   }
+// };
+
 module.exports = {
   existUser,
   registerUser,
   loginUser,
   checkUserAccountToken,
+  // checkActiveSession,
 };

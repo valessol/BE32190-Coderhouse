@@ -1,15 +1,18 @@
 const { Router } = require("express");
 const controller = require("../controllers/cart.js");
+const { auth } = require("../middlewares/auth.js");
 
 const router = Router();
 
-router.get("/", controller.getCarts);
-router.get("/:cartId", controller.getCartById);
-router.get("/:cartId/products", controller.getProductsOnCart);
-router.get("/:cartId/products/:productId", controller.getProduct);
-router.post("/:cartId", controller.saveProductOnCart);
-router.put("/:cartId", controller.updateProductOnCart);
-router.delete("/:cartId/:productId", controller.deleteProductOnCart);
-router.delete("/:cartId", controller.deleteCart);
+// Obtener carrito del usuario
+router.get("/:userId", auth, controller.getByUserId);
+// Guardar un producto en el carrito del usuario
+router.post("/:userId", auth, controller.saveProduct);
+// Actualizar un producto del carrito
+router.put("/:userId/:productId", auth, controller.updateProductOnCart);
+// Eliminar un producto del carrito
+router.put("/:userId/:productId", auth, controller.updateProductOnCart);
+// Eliminar carrito
+router.delete("/:userId", auth, controller.deleteCart);
 
 module.exports = router;
