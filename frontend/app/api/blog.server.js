@@ -1,11 +1,12 @@
-export const getAllPosts = async () => {
-  const fetchedData = await fetch(`${process.env.API_URL}/blog`);
-  const data = await fetchedData.json();
+import axios from "axios";
 
+export const getAllPosts = async () => {
+  const { data } = await axios(`${process.env.API_URL}/blog`);
+  console.log(data);
   const formatData = () => {
     return data.map((d) => ({
       ...d,
-      imageUrl: `${process.env.CLOUDINARY_BASE_URL}/v1680120548/GuitarLA/${d.url}.jpg`,
+      imageUrl: `${process.env.CLOUDINARY_BASE_URL}/GuitarLA/${d.url}.jpg`,
     }));
   };
 
@@ -25,7 +26,7 @@ export const getPostById = async (id) => {
   const formatData = () => {
     return {
       ...data,
-      imageUrl: `${process.env.CLOUDINARY_BASE_URL}/v1680120548/GuitarLA/${data.url}.jpg`,
+      imageUrl: `${process.env.CLOUDINARY_BASE_URL}/GuitarLA/${data.url}.jpg`,
     };
   };
 

@@ -11,12 +11,13 @@ const Navigation = () => {
   }, [location.pathname]);
 
   const setActiveClassName = () => {
-    const navConfig = routesConfig.map(({ path, label }) => {
+    const navConfig = routesConfig.map(({ path, label, image }) => {
       let active = "";
       if (path === location.pathname) active = "active";
       return {
         path,
         label,
+        image,
         active,
       };
     });
@@ -27,7 +28,10 @@ const Navigation = () => {
       {navItems &&
         navItems.map((nav) => (
           <Link key={nav.path} to={nav.path} className={nav.active}>
-            {nav.label}
+            {nav.label ? nav.label : ""}
+            {nav.image ? (
+              <img src={nav.image} alt="carrito de compras" />
+            ) : null}
           </Link>
         ))}
     </nav>

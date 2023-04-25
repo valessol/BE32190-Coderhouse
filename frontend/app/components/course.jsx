@@ -1,5 +1,4 @@
 const Course = ({ imageUrl }) => {
-  console.log(imageUrl);
   return (
     <section className="curso">
       <style jsx="true">

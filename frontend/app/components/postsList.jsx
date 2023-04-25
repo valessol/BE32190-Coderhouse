@@ -7,7 +7,7 @@ const PostsList = ({ data }) => {
       <h2 className="heading">Blog</h2>
       <div className="blog">
         {data.map((post) => (
-          <Post key={post.id} post={post} />
+          <Post key={post.url} post={post} />
         ))}
       </div>
     </>

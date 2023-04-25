@@ -9,7 +9,7 @@ export const getAllProducts = async () => {
       imageUrl: `${process.env.CLOUDINARY_BASE_URL}/GuitarLA/${d.url}.jpg`,
     }));
   };
-  console.log(formatData());
+
   return formatData();
 };
 

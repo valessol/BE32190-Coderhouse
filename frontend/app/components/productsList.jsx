@@ -1,10 +1,10 @@
 import React from "react";
 import Product from "./product";
 
-const ProductsList = ({ data }) => {
+const ProductsList = ({ data, title }) => {
   return (
     <>
-      <h2 className="heading">Productos</h2>
+      <h2 className="heading">{title}</h2>
 
       {data?.length && (
         <div className="guitarras-grid">

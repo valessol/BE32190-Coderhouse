@@ -5,7 +5,7 @@ import { getAllProducts } from "../api/productos.server";
 import ProductsList from "../components/productsList";
 import PostsList from "../components/postsList";
 import Course from "../components/course";
-import guitarStyles from "~/styles/guitarras.css";
+import guitarStyles from "~/styles/productos.css";
 import blogStyles from "~/styles/blog.css";
 import courseStyles from "~/styles/course.css";
 import { authUser } from "../api/auth.server";
@@ -38,35 +38,32 @@ export const links = () => {
 };
 
 export const loader = async ({ request }) => {
-  const authorization = request.headers.authorization;
-  console.log({ req: request.headers, authorization });
+  // if (!authorization) return redirect("/login");
 
-  if (!authorization) return redirect("/login");
+  // const user = await authUser(authorization);
+  // console.log(user);
+  // if (!user) return redirect("/login");
 
-  const user = await authUser(authorization);
-  console.log(user);
-  if (!user) return redirect("/login");
-
-  const [guitarras, posts] = await Promise.all([
+  const [products, posts] = await Promise.all([
     getAllProducts(),
     getAllPosts(),
   ]);
 
-  const courseImageUrl = `${process.env.CLOUDINARY_BASE_URL}/v1680290026/GuitarLA/cursos_bg_phjenp.jpg`;
+  const courseImageUrl = `${process.env.CLOUDINARY_BASE_URL}/GuitarLA/cursos_bg_phjenp.jpg`;
   return {
-    guitarras,
+    products,
     posts,
     courseImageUrl,
   };
 };
 
 const Index = () => {
-  const { guitarras, posts, courseImageUrl } = useLoaderData();
+  const { products, posts, courseImageUrl } = useLoaderData();
 
   return (
     <>
       <main className="contenedor">
-        <ProductsList data={guitarras} />
+        <ProductsList data={products} title="Guitarras" />
       </main>
       <Course imageUrl={courseImageUrl} />
       <section className="contenedor">
