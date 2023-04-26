@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getAllPosts = async () => {
   const { data } = await axios(`${process.env.API_URL}/blog`);
-  console.log(data);
+
   const formatData = () => {
     return data.map((d) => ({
       ...d,

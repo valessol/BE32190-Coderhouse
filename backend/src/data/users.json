@@ -4,6 +4,7 @@
     "email": "test@mail.com",
     "username": "Test1",
     "password": "$2b$10$ITEbXj4oep2KmhN9EiJUVOdbbCnPsN7bznQjIKP9EXndOmb9CPLTa",
+    "confirmed": true,
     "phone": 1234567890,
     "timestamp": 1681782348513
   },

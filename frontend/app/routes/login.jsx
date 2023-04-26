@@ -38,9 +38,9 @@ export const action = async ({ request }) => {
 
 const Login = () => {
   const [messages, setMessages] = useState([]);
-  const { setAuthUser } = useOutletContext();
+  const { authUser, setAuthUser } = useOutletContext();
   const actionData = useActionData();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (actionData && Array.isArray(actionData)) {
@@ -51,8 +51,15 @@ const Login = () => {
     } else {
       setMessages([]);
       setAuthUser(actionData);
+      // setUser(actionData);
     }
   }, [actionData]);
+
+  useEffect(() => {
+    if (authUser) {
+      navigate("/");
+    }
+  }, [authUser]);
 
   return (
     <>

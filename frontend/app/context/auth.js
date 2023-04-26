@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const AuthContext = () => {
-  const [authUser, setAuthUser] = useState({});
+const AuthContext = ({ initialState }) => {
+  const [authUser, setAuthUser] = useState(initialState || {});
+
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(authUser));
+  }, [authUser]);
+
   return { authUser, setAuthUser };
 };
 export default AuthContext;

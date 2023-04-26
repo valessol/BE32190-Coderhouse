@@ -37,10 +37,8 @@ const Guitarra = () => {
   const [quantity, setQuantity] = useState(0);
   const [message, setMessage] = useState([]);
   const data = useLoaderData();
-  const { authUser } = useOutletContext();
-  const { id, description, price, title, imageUrl } = data;
-
-  const { addToCart } = useOutletContext();
+  const { authUser, addToCart } = useOutletContext();
+  const { _id, description, price, title, imageUrl } = data;
 
   const handleChange = (e) => {
     setMessage([]);
@@ -78,15 +76,11 @@ const Guitarra = () => {
       ]);
 
     const selectedProduct = {
-      id,
-      title,
-      imageUrl,
+      _id,
       quantity,
-      price,
     };
 
-    await axios.post("http://localhost:8080/api/cart/");
-    addToCart(selectedProduct);
+    await addToCart(selectedProduct);
     setMessage({ text: "Añadido al carrito", type: "success" });
   };
   //TODO: bloquear boton si no hay stock

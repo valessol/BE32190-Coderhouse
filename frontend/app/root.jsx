@@ -13,6 +13,7 @@ import Header from "~/components/header";
 import Footer from "~/components/Footer";
 import { useEffect, useState } from "react";
 import { CART, USER } from "./constants/constants";
+import CartContext from "./context/cart";
 
 export const meta = () => {
   return [
@@ -55,41 +56,41 @@ export const links = () => {
 const userState =
   typeof window !== "undefined" ? JSON.parse(localStorage.getItem(USER)) : null;
 
-const cartState =
-  typeof window !== "undefined" ? JSON.parse(localStorage.getItem(CART)) : null;
+// const cartState =
+//   typeof window !== "undefined" ? JSON.parse(localStorage.getItem(CART)) : null;
 
 const App = () => {
   const [authUser, setAuthUser] = useState(userState || {});
-  const [cart, setCart] = useState(cartState || []);
+  // const [cart, setCart] = useState(cartState || []);
 
   useEffect(() => {
     localStorage.setItem(USER, JSON.stringify(authUser));
   }, [authUser]);
 
-  useEffect(() => {
-    localStorage.setItem(CART, JSON.stringify(cart));
-  }, [cart]);
+  // useEffect(() => {
+  //   localStorage.setItem(CART, JSON.stringify(cart));
+  // }, [cart]);
 
-  const addToCart = (item) => {
-    const existItem = cart.some((cartItem) => cartItem.id === item.id);
+  // const addToCart = (item) => {
+  //   const existItem = cart.some((cartItem) => cartItem.id === item.id);
 
-    if (!cart.length) return setCart([item]);
+  //   if (!cart.length) return setCart([item]);
 
-    const newCart = cart.map((cartItem) => {
-      if (cartItem.id === item.id) {
-        cartItem.quantity = item.quantity;
-      }
-      return cartItem;
-    });
+  //   const newCart = cart.map((cartItem) => {
+  //     if (cartItem.id === item.id) {
+  //       cartItem.quantity = item.quantity;
+  //     }
+  //     return cartItem;
+  //   });
 
-    if (existItem) setCart(newCart);
-    else setCart([...newCart, item]);
-  };
+  //   if (existItem) setCart(newCart);
+  //   else setCart([...newCart, item]);
+  // };
 
-  const deleteFromCart = (id) => {
-    const newCart = cart.filter((item) => item.id !== id);
-    setCart(newCart);
-  };
+  // const deleteFromCart = (id) => {
+  //   const newCart = cart.filter((item) => item.id !== id);
+  //   setCart(newCart);
+  // };
 
   return (
     <Document>
@@ -97,9 +98,10 @@ const App = () => {
         context={{
           authUser,
           setAuthUser,
-          cart,
-          addToCart,
-          deleteFromCart,
+          // cart,
+          // addToCart,
+          // deleteFromCart,
+          ...CartContext(authUser),
         }}
       />
     </Document>

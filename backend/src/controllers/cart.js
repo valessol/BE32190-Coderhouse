@@ -37,11 +37,12 @@ class CartsController {
       const carts = await getCarts();
       res.status(200).json(carts);
     } catch (err) {
-      console.log(err);
+      return res.status(400).json({ msg: err.message });
     }
   };
 
   getByUserId = async (req, res) => {
+    console.log(req);
     try {
       const { userId } = req.params;
       const isValidUser = await existUser({ _id: userId });
@@ -54,7 +55,7 @@ class CartsController {
       const cart = await getCartByUserId(userId);
       res.status(200).json(cart);
     } catch (err) {
-      return res.status(400).json({ msg: error.message });
+      return res.status(400).json({ msg: err.message });
     }
   };
 
@@ -66,7 +67,7 @@ class CartsController {
       const savedCart = await saveProductOnCart(product, userId);
       res.status(201).json(savedCart);
     } catch (err) {
-      console.log(err);
+      return res.status(400).json({ msg: err.message });
     }
   };
 
@@ -74,15 +75,11 @@ class CartsController {
     try {
       const { userId, productId } = req.params;
       const product = req.body;
-      console.log(product);
-      const updatedProduct = await updateProductOnCart(
-        userId,
-        productId,
-        product
-      );
-      res.status(200).json(updatedProduct);
+
+      const updatedCart = await updateProductOnCart(userId, productId, product);
+      res.status(200).json(updatedCart);
     } catch (err) {
-      console.log(err);
+      return res.status(400).json({ msg: err.message });
     }
   };
 
@@ -92,7 +89,7 @@ class CartsController {
       const cart = await deleteCart(userId);
       res.status(200).json(cart);
     } catch (err) {
-      console.log(err);
+      return res.status(400).json({ msg: err.message });
     }
   };
 }
