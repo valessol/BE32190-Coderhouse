@@ -8,21 +8,18 @@ const {
 } = require("./router/index.js");
 const blogRouter = require("./router/blog.js");
 const config = require("../config.js");
-const errorHandler = require("./middlewares/errorHandler.js");
 
 const app = express();
 const httpServer = new HttpServer(app);
 
-const whitelist = ["http://localhost:3000"];
+const whitelist = ["http://localhost:3000", "http://127.0.0.1:5173"];
 const corsOptions = {
   origin: function (origin, callback) {
-    callback(null, true);
-    // if (whitelist.includes(origin)) {
-    //   callback(null, true);
-    // } else {
-    //   console.log({ origin });
-    //   callback(new Error("Error de CORS"));
-    // }
+    if (whitelist.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Error de CORS"));
+    }
   },
 };
 

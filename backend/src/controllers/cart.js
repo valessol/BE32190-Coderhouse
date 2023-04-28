@@ -42,7 +42,6 @@ class CartsController {
   };
 
   getByUserId = async (req, res) => {
-    console.log(req);
     try {
       const { userId } = req.params;
       const isValidUser = await existUser({ _id: userId });
