@@ -20,8 +20,9 @@ const createCart = async (userId = "") => {
       products: [],
       userId,
     };
+    const cart = await persistence.saveItem(newCart, { userId });
 
-    return await persistence.saveItem(newCart, { userId });
+    return cart;
   } catch (error) {
     return error.message;
   }
@@ -60,7 +61,7 @@ const saveProductOnCart = async (product, userId) => {
     let cart = {};
 
     if (userId) cart = await getCartByUserId(userId);
-    else cart = await createCart();
+    if (!cart?._id) cart = await createCart(userId);
 
     const existProductOnCart = cart.products.find(
       (prod) => prod._id === product._id

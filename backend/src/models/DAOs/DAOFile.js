@@ -53,6 +53,7 @@ class DAOFile {
       };
 
       const allItems = await this.getItems();
+
       let allUpdatedItems;
 
       if (this.collection === "carts") {
@@ -63,11 +64,10 @@ class DAOFile {
       } else {
         allUpdatedItems = [...allItems, itemToUpload];
       }
+
       await fs.promises
         .writeFile(this.path, JSON.stringify(allUpdatedItems))
-        .then(() => {
-          return convertToDTO(itemToUpload, this.collection);
-        })
+        .then(() => convertToDTO(itemToUpload, this.collection))
         .catch((err) => {
           return new Error(`no se ha podido guardar, ${err.message}`);
         });
