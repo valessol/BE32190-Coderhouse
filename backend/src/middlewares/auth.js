@@ -15,13 +15,13 @@ const auth = (req, res, next) => {
     return res.status(401).json({ msg: error.message });
   }
 
-  const token = authHeader.split(" ")[1];
+  const token = authorization.split(" ")[1];
+
   jwt.verify(token, config.JWT_PRIVATE_KEY, (err, decoded) => {
     if (err) {
       return res.status(403).json({ msg: "No autorizado" });
     }
     req.user = decoded.data;
-    console.log("auth middlew", req.user);
     //TODO: quitar datos sensibles de ususario
     next();
   });
