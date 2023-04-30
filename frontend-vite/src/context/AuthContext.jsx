@@ -38,12 +38,17 @@ const AuthProvider = ({ children }) => {
     setLoading(false);
   };
 
+  const logout = () => {
+    setAuth({});
+  };
+
   return (
     <AuthContext.Provider
       value={{
         auth,
         loading,
         setAuth,
+        logout,
       }}
     >
       {children}
