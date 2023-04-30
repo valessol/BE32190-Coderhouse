@@ -4,7 +4,7 @@ import { ProductsContext } from "../context/ProductsContext";
 
 const CartItem = ({ data }) => {
   const [cartItem, setCartItem] = useState({});
-  const { addToCart, deleteFromCart } = useContext(CartContext);
+  const { addToCart, deleteProductOnCart } = useContext(CartContext);
   const { products } = useContext(ProductsContext);
   const { _id, quantity } = data;
 
@@ -37,10 +37,10 @@ const CartItem = ({ data }) => {
           className="border text-center w-full rounded"
           onChange={handleChange}
         >
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
+          <option value={1}>1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
+          <option value={4}>4</option>
         </select>
         <p className="text-3xl mt-4 mb-0 font-bold text-amber-500">
           $ <span className="font-black text-4xl">{cartItem.price}</span>
@@ -55,7 +55,7 @@ const CartItem = ({ data }) => {
       <button
         type="button"
         className="absolute top-12 right-4 cursor-pointer"
-        onClick={() => deleteFromCart(_id)}
+        onClick={() => deleteProductOnCart(_id)}
       >
         X
       </button>

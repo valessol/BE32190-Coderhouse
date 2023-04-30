@@ -82,10 +82,10 @@ const ProductDetail = () => {
             onChange={handleChange}
           >
             <option value="">--Seleccione--</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
           </select>
           <input
             className="mt-12 bg-gray-950 text-white uppercase p-6 font-bold border-none transition-colors hover:cursor-pointer hover:bg-amber-500"

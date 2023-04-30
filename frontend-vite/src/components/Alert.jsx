@@ -1,7 +1,7 @@
 const Alert = ({ alert, cssStyles }) => {
   const messageClass = {
     error: "from-red-400 to-red-600",
-    success: "from-sky-400 to-sky-600",
+    success: "from-teal-400 to-teal-600",
   };
 
   return (

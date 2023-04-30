@@ -27,7 +27,7 @@ export const registerFormConfig = {
   ],
   submitText: "Registrar",
   linkText: "Ya estoy registrado",
-  linkUrl: "/",
+  linkUrl: "/login",
 };
 
 export const loginFormConfig = {

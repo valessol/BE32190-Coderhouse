@@ -11,7 +11,7 @@ const CartProvider = ({ children }) => {
 
   useEffect(() => {
     setInitialState();
-  }, [user]);
+  }, [user, cart]);
 
   useEffect(() => {
     if (products.length) calculateTotal();
@@ -49,8 +49,30 @@ const CartProvider = ({ children }) => {
     }
   };
 
+  const getUserCart = async () => {
+    try {
+      const token = user.token;
+      const id = user._id;
+
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axiosClient.post(`/${id}`, undefined, config);
+      setCart(data);
+    } catch (error) {
+      //TODO:
+      console.log("que retorna el error de esto?", error);
+      return error;
+    }
+  };
+
   const addToCart = async (product) => {
-    console.log("adding...");
     try {
       const token = user.token;
       const id = user._id;
@@ -93,6 +115,27 @@ const CartProvider = ({ children }) => {
     }
   };
 
+  const deleteProductOnCart = async (productId) => {
+    try {
+      const token = user.token;
+      const userId = user._id;
+      console.log(token, userId);
+      if (!token) return;
+
+      const { data } = await axiosClient.put(
+        `/cart/${userId}/${productId}`,
+        undefined,
+        getHeader(token)
+      );
+      console.log(data);
+      setCart(data);
+    } catch (error) {
+      //TODO:
+      console.log("que retorna el error de esto?", error);
+      return error;
+    }
+  };
+
   const removeCart = async () => {
     try {
       const token = user.token;
@@ -112,7 +155,7 @@ const CartProvider = ({ children }) => {
       return error;
     }
   };
-  console.log(cart);
+
   const calculateTotal = async () => {
     if (cart && cart?.products?.length) {
       const productsOnCart = cart.products;
@@ -133,8 +176,10 @@ const CartProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         cart,
+        getUserCart,
         addToCart,
         updateProductOnCart,
+        deleteProductOnCart,
         removeCart,
         setAuthUser,
         calculateTotal,

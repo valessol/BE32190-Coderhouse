@@ -10,7 +10,7 @@ const Spinner = ({ text, style }) => {
   return (
     <>
       {text && (
-        <p className="block text-center my-5 text slate-500 uppercase text-sm">
+        <p className="block text-center my-5 text amber-500 uppercase text-sm">
           {text}
         </p>
       )}

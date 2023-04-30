@@ -17,6 +17,8 @@ const ProtectedRoutes = ({ children }) => {
       />
     );
 
-  return <>{auth?._id ? <Layout>{children}</Layout> : <Navigate to="/" />}</>;
+  return (
+    <>{auth?._id ? <Layout>{children}</Layout> : <Navigate to="/login" />}</>
+  );
 };
 export default ProtectedRoutes;

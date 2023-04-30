@@ -30,7 +30,7 @@ const AuthProvider = ({ children }) => {
     try {
       const { data } = await axiosClient("/auth", config);
       setAuth(data);
-      if (location.path === "/login") navigate("/tienda");
+      if (location.path === "/login") navigate("/");
     } catch (error) {
       setAuth({});
     }

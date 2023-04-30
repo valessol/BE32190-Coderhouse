@@ -10,7 +10,7 @@ const Cart = () => {
   const { cart, setAuthUser, setProducts, total } = useContext(CartContext);
   const { auth } = useContext(AuthContext);
   const { products } = useContext(ProductsContext);
-
+  console.log(cart);
   useEffect(() => {
     setAuthUser(auth);
   }, [auth]);
@@ -43,7 +43,7 @@ const Cart = () => {
           {!cart.products?.length
             ? "Carrito vacío"
             : cart.products.map((item) => (
-                <CartItem data={item} key={item.id} />
+                <CartItem data={item} key={item._id} />
               ))}
         </div>
         <aside className="sticky top-12">
@@ -60,7 +60,7 @@ const Cart = () => {
             >
               Finalizar pedido
             </button>
-            <Link to="/tienda" className={`text-center ${buttonsClassName}`}>
+            <Link to="/" className={`text-center ${buttonsClassName}`}>
               Seguir comprando
             </Link>
           </div>

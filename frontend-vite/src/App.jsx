@@ -20,15 +20,16 @@ function App() {
           <CartProvider>
             <Routes>
               <Route path="/" element={<Layout />}>
-                <Route index element={<Login />} />
+                <Route index element={<Store />} />
+                <Route path="login" element={<Login />} />
                 <Route path="registrar" element={<Register />} />
                 <Route path="confirmar/:id" element={<ConfirmAccount />} />
+                <Route path="tienda/:id" element={<ProductDetail />} />
               </Route>
 
-              <Route path="/tienda" element={<Layout />}>
+              {/* <Route path="/tienda" element={<Layout />}>
                 <Route index element={<Store />} />
-                <Route path=":id" element={<ProductDetail />} />
-              </Route>
+              </Route> */}
 
               <Route path="/carrito" element={<ProtectedRoutes />}>
                 <Route index element={<Cart />} />

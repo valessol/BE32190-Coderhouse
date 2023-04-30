@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosClient from "../config/axiosClient";
 import Alert from "../components/Alert";
-import useAuth from "../hooks/useAuth";
+import { AuthContext } from "../context/AuthContext";
+import { CartContext } from "../context/CartContext";
 
 const Login = () => {
   const [values, setValues] = useState({ email: "", password: "" });
   const [alert, setAlert] = useState({});
   //TODO: Añadir Spinner
   const [loading, setLoading] = useState(false);
-  const { setAuth } = useAuth();
+  const { setAuth } = useContext(AuthContext);
+  const { getUserCart } = useContext(CartContext);
   const navigate = useNavigate();
 
   const validateFormValues = () => {
@@ -56,8 +58,12 @@ const Login = () => {
         msg: "Has iniciado sesión correctamente, redirigiendo a la tienda...",
         type: "success",
       });
+
+      // Crear carrito cuando el usuario se loguea
+      getUserCart();
+
       setTimeout(() => {
-        navigate("/tienda");
+        navigate("/");
       }, 1000);
     } catch (error) {
       setAlert({ msg: error.response.data.msg, type: "error" });
