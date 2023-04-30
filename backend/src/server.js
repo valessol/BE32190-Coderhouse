@@ -6,7 +6,6 @@ const {
   cartsRouter,
   authRouter,
 } = require("./router/index.js");
-const blogRouter = require("./router/blog.js");
 const config = require("../config.js");
 
 const app = express();
@@ -23,13 +22,13 @@ const corsOptions = {
   },
 };
 
+// Comentar la linea siguiente si se realizan peticiones a través de POSTMAN
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/auth", authRouter);
 app.use("/api/products", productsRouter);
-app.use("/api/blog", blogRouter);
 app.use("/api/cart", cartsRouter);
 
 app.use((err, req, res, next) => {

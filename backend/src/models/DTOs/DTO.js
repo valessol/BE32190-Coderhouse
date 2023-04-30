@@ -1,15 +1,11 @@
-const BlogDTO = require("./blog");
 const CartDTO = require("./carts");
-const MessageDTO = require("./messages");
 const ProductDTO = require("./products");
 const UserDTO = require("./users");
 
 const getDTO = (data, collection) => {
   const models = {
     products: ProductDTO,
-    messages: MessageDTO,
     users: UserDTO,
-    blog: BlogDTO,
     carts: CartDTO,
   };
   const DTO = models[collection];

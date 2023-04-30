@@ -1,14 +1,25 @@
 const { compareSync } = require("bcrypt");
 const {
+  getAllUsers,
   existUser,
   registerUser,
   loginUser,
   checkUserAccountToken,
+  deleteUser,
 } = require("../services/auth.js");
 const { generateAuthToken } = require("../middlewares/auth.js");
 
 class Controller {
   constructor() {}
+
+  getAll = async (req, res) => {
+    try {
+      const users = await getAllUsers();
+      res.status(201).json(users);
+    } catch (error) {
+      res.json({ msg: error.message });
+    }
+  };
 
   registerUser = async (req, res) => {
     try {
@@ -71,7 +82,6 @@ class Controller {
 
   checkAccountVerificationToken = async (req, res) => {
     const { token } = req.params;
-    console.log(token);
     const confirmedUser = await checkUserAccountToken(token);
 
     if (!confirmedUser) {
@@ -80,6 +90,17 @@ class Controller {
     }
 
     res.json({ msg: "Usuario confirmado correctamente" });
+  };
+
+  delete = async (req, res) => {
+    try {
+      const { userId } = req.params;
+
+      await deleteUser(userId);
+      res.json({ msg: "Usuario eliminado correctamente" });
+    } catch (error) {
+      res.json({ msg: error.message });
+    }
   };
 }
 

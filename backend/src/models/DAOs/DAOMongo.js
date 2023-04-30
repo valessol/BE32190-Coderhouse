@@ -55,14 +55,13 @@ class DAOMongo {
     }
   };
 
-  saveItem = async (item, _options) => {
+  saveItem = async (item) => {
     try {
       await this.model.create({ ...item });
       const savedItem = await this.model
         .find()
         .where("timestamp")
         .equals(item.timestamp);
-
       return convertToDTO(savedItem[0], this.collection);
     } catch (err) {
       console.log(err);

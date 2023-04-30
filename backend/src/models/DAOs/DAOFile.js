@@ -43,7 +43,7 @@ class DAOFile {
     return convertToDTO(item, this.collection);
   }
 
-  async saveItem(item, _options) {
+  async saveItem(item) {
     if (item) {
       const _id = await this.generateId();
       const itemToUpload = {

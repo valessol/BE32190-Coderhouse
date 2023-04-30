@@ -33,6 +33,14 @@ const existUser = async (email) => {
   }
 };
 
+const getAllUsers = async () => {
+  try {
+    return await services.getItems();
+  } catch (error) {
+    return new Error("No se ha podido encontrar al usuario");
+  }
+};
+
 const generateAccountToken = () => {
   try {
     const id = crypto.randomUUID();
@@ -43,6 +51,7 @@ const generateAccountToken = () => {
 };
 
 const registerUser = async (userData) => {
+  console.log(userData);
   try {
     const { email, password } = userData;
     const salt = await genSalt(10);
@@ -57,8 +66,10 @@ const registerUser = async (userData) => {
       return new Error("formato de usuario inválido");
     }
 
-    const savedUser = await services.saveItem(newUser, { email });
-    return savedUser;
+    await services.saveItem(newUser);
+    const users = await getAllUsers();
+    const user = users.find((registeredUser) => registeredUser.email === email);
+    return user;
   } catch (err) {
     throw new Error(err);
   }
@@ -89,9 +100,20 @@ const checkUserAccountToken = async (token) => {
   }
 };
 
+const deleteUser = async (_id) => {
+  try {
+    const user = await services.deleteItem(_id);
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
+  getAllUsers,
   existUser,
   registerUser,
   loginUser,
   checkUserAccountToken,
+  deleteUser,
 };
