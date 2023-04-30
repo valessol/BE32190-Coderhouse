@@ -3,7 +3,7 @@ const config = require("../../config");
 
 const sendConfirmEmail = async (email, username, token) => {
   let transporter = nodemailer.createTransport({
-    service: "smtp.ethereal.email",
+    service: "Gmail",
     port: 587,
     auth: {
       user: config.MAIL_ADDRESS,
@@ -13,7 +13,7 @@ const sendConfirmEmail = async (email, username, token) => {
 
   const emailContent = {
     from: '"GuitarLA" <account@guitarla.com>',
-    to: "elisa.farrell84@ethereal.email",
+    to: `<${email}>`,
     subject: "GuitarLA - Confirmación de la cuenta",
     text: "Comprueba tu cuenta en GuitarLA",
     html: `
@@ -26,6 +26,7 @@ const sendConfirmEmail = async (email, username, token) => {
 
   try {
     const info = await transporter.sendMail(emailContent);
+    console.log(info);
   } catch (error) {
     return {
       msg: `Hubo un error al intentar enviar el correo de confirmación: ${error}`,

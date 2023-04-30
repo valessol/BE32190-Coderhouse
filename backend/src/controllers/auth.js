@@ -32,6 +32,7 @@ class Controller {
       }
 
       await registerUser(req.body);
+
       res.status(201).json({
         msg: "Registro con éxito. Revisa tu bandeja de entrada para confirmar tu cuenta",
       });
@@ -50,10 +51,10 @@ class Controller {
         return res.status(404).json({ msg: error.message });
       }
 
-      if (!userData.confirmed) {
-        const error = new Error("Tu cuenta no ha sido confirmada");
-        return res.status(403).json({ msg: error.message });
-      }
+      // if (!userData.confirmed) {
+      //   const error = new Error("Tu cuenta no ha sido confirmada");
+      //   return res.status(403).json({ msg: error.message });
+      // }
 
       const isCheckedPassword = compareSync(password, userData.password);
 

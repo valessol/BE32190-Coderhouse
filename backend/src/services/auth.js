@@ -3,6 +3,7 @@ const { hash: getHash, genSalt } = require("bcrypt");
 const DAOFactory = require("../models/DAOs/DAOFactory.js");
 const usersSchema = require("../models/schemas/users.js");
 const User = require("../models/model/User.js");
+const sendConfirmEmail = require("../utils/nodemailer.js");
 
 const services = DAOFactory.get("users", usersSchema);
 
@@ -68,6 +69,7 @@ const registerUser = async (userData) => {
     await services.saveItem(newUser);
     const users = await getAllUsers();
     const user = users.find((registeredUser) => registeredUser.email === email);
+    sendConfirmEmail(user.email, user.username, user.token);
     return user;
   } catch (err) {
     throw new Error(err);
