@@ -4,6 +4,7 @@ const {
   saveProductOnCart,
   getCarts,
   updateProductOnCart,
+  removeProductFromCart,
   deleteCart,
 } = require("../services/carts.js");
 const productsInstance = require("../services/products.js");
@@ -25,7 +26,8 @@ class CartsController {
 
   createUserCart = async (req, res) => {
     try {
-      const newCart = await createCart();
+      const { userId } = req.params;
+      const newCart = await createCart(userId);
       res.json(newCart);
     } catch (error) {
       res.json({ msg: error.message });
@@ -75,7 +77,10 @@ class CartsController {
       const { userId, productId } = req.params;
       const product = req.body;
 
-      const updatedCart = await updateProductOnCart(userId, productId, product);
+      let updatedCart;
+      if (!Object.keys(product).length)
+        updatedCart = await removeProductFromCart(userId, productId);
+      else updatedCart = await updateProductOnCart(userId, productId, product);
       res.status(200).json(updatedCart);
     } catch (err) {
       return res.status(400).json({ msg: err.message });

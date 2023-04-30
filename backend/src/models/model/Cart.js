@@ -7,7 +7,6 @@ class Cart {
 
   static validate(cart) {
     const CartSchema = Joi.object({
-      _id: Joi.string().required(),
       products: Joi
         .array
         //   {

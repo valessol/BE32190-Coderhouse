@@ -7,8 +7,7 @@ const schema = {
       quantity: Number,
     },
   ],
-  email: String,
-  address: String,
+  userId: String,
   timestamp: String,
 };
 

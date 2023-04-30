@@ -2,7 +2,7 @@ const crypto = require("crypto");
 const mongoose = require("mongoose");
 const config = require("../../../config.js");
 const { ObjectId } = require("mongodb");
-const { convertToDTO } = require("../DTOs/DTO.js");
+const convertToDTO = require("../DTOs/DTO.js");
 
 class DAOMongo {
   constructor(collection, schema) {
@@ -55,13 +55,15 @@ class DAOMongo {
     }
   };
 
-  saveItem = async (item, options) => {
+  saveItem = async (item, _options) => {
     try {
       await this.model.create({ ...item });
-      const savedItem = await this.model.findOne({
-        ...options,
-      });
-      return convertToDTO(savedItem, this.collection);
+      const savedItem = await this.model
+        .find()
+        .where("timestamp")
+        .equals(item.timestamp);
+
+      return convertToDTO(savedItem[0], this.collection);
     } catch (err) {
       console.log(err);
     }
@@ -71,7 +73,7 @@ class DAOMongo {
     try {
       const _id = new ObjectId(id);
       await this.model.updateOne({ _id }, { ...data });
-      const item = await this.getById(id);
+      const item = await this.getById(_id);
       return convertToDTO(item, this.collection);
     } catch (err) {
       console.log(err);

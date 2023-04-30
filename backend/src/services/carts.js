@@ -7,20 +7,26 @@ const persistence = DAOFactory.get("carts", cartsSchema);
 
 const validateCart = (cart) => {
   try {
-    Cart.validate(cart);
+    const { _id: omit, ...rest } = cart;
+    Cart.validate(rest);
     return true;
   } catch (error) {
     throw new Error("Carrito no válido");
   }
 };
 
+const setDefaultAttr = (cart) => {
+  return { ...cart, timestamp: new Date() };
+};
+
 const createCart = async (userId = "") => {
   try {
-    const newCart = {
+    const newCart = setDefaultAttr({
       products: [],
       userId,
-    };
-    const cart = await persistence.saveItem(newCart, { userId });
+    });
+
+    const cart = await persistence.saveItem(newCart);
 
     return cart;
   } catch (error) {
@@ -59,10 +65,9 @@ const getCartByUserId = async (userId) => {
 const saveProductOnCart = async (product, userId) => {
   try {
     let cart = {};
-
     if (userId) cart = await getCartByUserId(userId);
-    if (!cart?._id) cart = await createCart(userId);
 
+    if (!cart?._id) cart = await createCart(userId);
     const existProductOnCart = cart.products.find(
       (prod) => prod._id === product._id
     );
@@ -74,12 +79,11 @@ const saveProductOnCart = async (product, userId) => {
       ];
     else cart.products = [...cart.products, product];
 
-    const options = { _id: cart._id };
-
     if (!validateCart(cart)) {
-      return new Error("formato de post inválido");
+      return new Error("formato de carrito inválido");
     }
-    await persistence.saveItem(cart, options);
+
+    await persistence.updateItem(cart._id, cart);
     return cart;
   } catch (err) {
     console.log(err);
@@ -89,30 +93,40 @@ const saveProductOnCart = async (product, userId) => {
 const updateProductOnCart = async (userId, productId, product) => {
   try {
     const cart = await getCartByUserId(userId);
-    const _id = cart._id;
-    const oldProduct = cart.products.find((prod) => prod._id === productId);
+
+    const updatedProducts = cart.products.map((cartProduct) => {
+      if (cartProduct._id === productId) {
+        return { _id: productId, quantity: product.quantity };
+      } else return cartProduct;
+    });
+
+    const newCart = {
+      ...cart,
+      products: updatedProducts,
+    };
+
+    await persistence.updateItem(cart._id, newCart);
+    return newCart;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const removeProductFromCart = async (userId, productId) => {
+  console.log("remove");
+  try {
+    const cart = await getCartByUserId(userId);
 
     const filteredProducts = cart.products.filter(
       (prod) => prod._id !== productId
     );
 
-    let newProduct;
-    let newCart;
+    const newCart = {
+      ...cart,
+      products: [...filteredProducts],
+    };
 
-    if (Object.keys(product).length) {
-      newProduct = { ...oldProduct, ...product };
-      newCart = {
-        ...cart,
-        products: [...filteredProducts, newProduct],
-      };
-    } else {
-      newCart = {
-        ...cart,
-        products: [...filteredProducts],
-      };
-    }
-
-    await persistence.updateItem(_id, newCart);
+    await persistence.updateItem(cart._id, newCart);
     return newCart;
   } catch (err) {
     console.log(err);
@@ -138,5 +152,6 @@ module.exports = {
   getCarts,
   getCartById,
   updateProductOnCart,
+  removeProductFromCart,
   deleteCart,
 };

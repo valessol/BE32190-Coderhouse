@@ -1,7 +1,6 @@
 const DAOFile = require("./DAOFile.js");
 const DAOMongo = require("./DAOMongo.js");
 const config = require("../../../config.js");
-
 class DAOFactory {
   static get(collection, schema) {
     const DAOpersistence = {
