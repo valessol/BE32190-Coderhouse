@@ -8,7 +8,6 @@ import { CartContext } from "../context/CartContext";
 const Login = () => {
   const [values, setValues] = useState({ email: "", password: "" });
   const [alert, setAlert] = useState({});
-  //TODO: Añadir Spinner
   const [loading, setLoading] = useState(false);
   const { setAuth } = useContext(AuthContext);
   const { getUserCart } = useContext(CartContext);

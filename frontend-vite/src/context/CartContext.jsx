@@ -10,8 +10,9 @@ const CartProvider = ({ children }) => {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    setInitialState();
-  }, [user, cart]);
+    if (user._id) setInitialState();
+    else setCart({});
+  }, [user]);
 
   useEffect(() => {
     if (products.length) calculateTotal();
@@ -43,9 +44,7 @@ const CartProvider = ({ children }) => {
       const { data } = await axiosClient(`/cart/${id}`, config);
       setCart(data);
     } catch (error) {
-      //TODO:
-      console.log("que retorna el error de esto?", error);
-      return error;
+      console.log(error);
     }
   };
 
@@ -66,9 +65,7 @@ const CartProvider = ({ children }) => {
       const { data } = await axiosClient.post(`/${id}`, undefined, config);
       setCart(data);
     } catch (error) {
-      //TODO:
-      console.log("que retorna el error de esto?", error);
-      return error;
+      console.log(error);
     }
   };
 
@@ -79,7 +76,7 @@ const CartProvider = ({ children }) => {
 
       if (!token) return;
 
-      const { data } = await axiosClient.post(
+      const { data } = await axiosClient.put(
         `/cart/${id}`,
         product,
         getHeader(token)
@@ -87,9 +84,7 @@ const CartProvider = ({ children }) => {
 
       setCart(data);
     } catch (error) {
-      //TODO:
-      console.log("que retorna el error de esto?", error);
-      return error;
+      console.log(error);
     }
   };
 
@@ -109,9 +104,7 @@ const CartProvider = ({ children }) => {
 
       setCart(data);
     } catch (error) {
-      //TODO:
-      console.log("que retorna el error de esto?", error);
-      return error;
+      console.log(error);
     }
   };
 
@@ -119,7 +112,7 @@ const CartProvider = ({ children }) => {
     try {
       const token = user.token;
       const userId = user._id;
-      console.log(token, userId);
+
       if (!token) return;
 
       const { data } = await axiosClient.put(
@@ -127,12 +120,29 @@ const CartProvider = ({ children }) => {
         undefined,
         getHeader(token)
       );
-      console.log(data);
+
       setCart(data);
     } catch (error) {
-      //TODO:
-      console.log("que retorna el error de esto?", error);
-      return error;
+      console.log(error);
+    }
+  };
+
+  const deleteAllProductsFromCart = async () => {
+    try {
+      const token = user.token;
+      const userId = user._id;
+
+      if (!token) return;
+
+      const { data } = await axiosClient.put(
+        `/cart/remove/${userId}`,
+        undefined,
+        getHeader(token)
+      );
+
+      setCart(data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -150,9 +160,7 @@ const CartProvider = ({ children }) => {
 
       setCart(data);
     } catch (error) {
-      //TODO:
-      console.log("que retorna el error de esto?", error);
-      return error;
+      console.log(error);
     }
   };
 
@@ -180,6 +188,7 @@ const CartProvider = ({ children }) => {
         addToCart,
         updateProductOnCart,
         deleteProductOnCart,
+        deleteAllProductsFromCart,
         removeCart,
         setAuthUser,
         calculateTotal,

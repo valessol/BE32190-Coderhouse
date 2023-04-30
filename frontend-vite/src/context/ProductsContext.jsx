@@ -28,9 +28,7 @@ const ProductsProvider = ({ children }) => {
 
       setProducts(formatData());
     } catch (error) {
-      //TODO:
-      console.log("que retorna el error de esto?", error);
-      return error;
+      console.log(error);
     }
     setLoading(false);
   };
@@ -56,9 +54,7 @@ const ProductsProvider = ({ children }) => {
       };
       setProduct(formatData());
     } catch (error) {
-      //TODO:
-      console.log("que retorna el error de esto?", error);
-      return error;
+      console.log(error);
     }
     setLoading(false);
   };

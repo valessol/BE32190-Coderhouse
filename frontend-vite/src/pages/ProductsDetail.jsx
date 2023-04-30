@@ -61,7 +61,7 @@ const ProductDetail = () => {
     await addToCart(selectedProduct);
     setMessage({ msg: "Añadido al carrito", type: "success" });
   };
-  //TODO: bloquear boton si no hay stock
+
   return (
     <div className="grid gap-4 grid-cols-[2fr_3fr] items-center max-w-6xl my-0 mx-auto">
       <img src={imageUrl} alt={`Imagen de la guitarra ${title}`} />
