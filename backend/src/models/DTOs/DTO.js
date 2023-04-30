@@ -1,12 +1,12 @@
-const MessageDTO = require("./messages");
+const CartDTO = require("./carts");
 const ProductDTO = require("./products");
 const UserDTO = require("./users");
 
 const getDTO = (data, collection) => {
   const models = {
     products: ProductDTO,
-    messages: MessageDTO,
     users: UserDTO,
+    carts: CartDTO,
   };
   const DTO = models[collection];
   return new DTO(data);

@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const schema = {
   title: String,
   description: String,
-  price: String,
+  price: Number,
   stock: Number,
   url: String,
   category: String,

@@ -11,6 +11,8 @@ class User {
       password: Joi.string().required(),
       phone: Joi.number(),
       email: Joi.string().required(),
+      token: Joi.string().required(),
+      confirmed: Joi.boolean(),
       timestamp: Joi.date(),
     });
 

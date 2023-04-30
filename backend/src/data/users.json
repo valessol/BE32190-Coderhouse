@@ -4,7 +4,19 @@
     "email": "test@mail.com",
     "username": "Test1",
     "password": "$2b$10$ITEbXj4oep2KmhN9EiJUVOdbbCnPsN7bznQjIKP9EXndOmb9CPLTa",
+    "confirmed": true,
     "phone": 1234567890,
     "timestamp": 1681782348513
+  },
+  {
+    "username": "Vale",
+    "phone": 1234567896,
+    "email": "test2@mail.com",
+    "password": "$2b$10$S6YwAMDIoHHD3eVxf70iK.Vys8YTQ3jaoq85hKn9oGfw9O3zUKHLq",
+    "timestamp": 1682234441877,
+    "token": "2be472c6-65eb-4896-9e66-c4b5abf1cb5b",
+    "confirmed": true,
+    "id": "bf645458-8bfa-4072-ada5-a8615704e660",
+    "_id": "bf645458-8bfa-4072-ada5-a8615704e660"
   }
 ]

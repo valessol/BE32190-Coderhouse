@@ -1,11 +1,19 @@
-const cartInstance = require("../services/carts.js");
+const {
+  createCart,
+  getCartByUserId,
+  saveProductOnCart,
+  getCarts,
+  updateProductOnCart,
+  removeProductFromCart,
+  deleteCart,
+} = require("../services/carts.js");
 const productsInstance = require("../services/products.js");
+const { existUser } = require("../services/auth.js");
 
 class CartsController {
   static instance;
 
   constructor() {
-    this.carts = cartInstance;
     this.products = productsInstance;
   }
 
@@ -16,87 +24,76 @@ class CartsController {
     return this.instance;
   }
 
-  getCarts = async (req, res) => {
+  createUserCart = async (req, res) => {
     try {
-      const carts = await this.carts.getCarts();
+      const { userId } = req.params;
+      const newCart = await createCart(userId);
+      res.json(newCart);
+    } catch (error) {
+      res.json({ msg: error.message });
+    }
+  };
+
+  getAllCarts = async (req, res) => {
+    try {
+      const carts = await getCarts();
       res.status(200).json(carts);
     } catch (err) {
-      console.log(err);
+      return res.status(400).json({ msg: err.message });
     }
   };
 
-  getCartById = async (req, res) => {
+  getByUserId = async (req, res) => {
     try {
-      const { cartId } = req.params;
-      const cart = await this.carts.getCartById(cartId);
+      const { userId } = req.params;
+      const isValidUser = await existUser({ _id: userId });
+
+      if (!isValidUser) {
+        const error = new Error("El usuario no existe");
+        return res.status(400).json({ msg: error.message });
+      }
+
+      const cart = await getCartByUserId(userId);
       res.status(200).json(cart);
     } catch (err) {
-      console.log(err);
+      return res.status(400).json({ msg: err.message });
     }
   };
 
-  getProductsOnCart = async (req, res) => {
-    try {
-      const { cartId } = req.params;
-      const products = await this.cart.getProductsOnCart(cartId);
-      res.status(200).json(products);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  getProduct = async (req, res) => {
-    try {
-      const { cartId, productId } = req.params;
-      const product = await this.cart.getProduct(cartId, productId);
-      res.status(200).json(product);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  saveProductOnCart = async (req, res) => {
+  saveProduct = async (req, res) => {
     try {
       const product = req.body;
-      const { cartId } = req.params;
-      const savedProduct = await this.products.saveProduct(product, cartId);
-      res.status(201).json(savedProduct);
+      const { userId } = req.params;
+
+      const savedCart = await saveProductOnCart(product, userId);
+      res.status(201).json(savedCart);
     } catch (err) {
-      console.log(err);
+      return res.status(400).json({ msg: err.message });
     }
   };
 
   updateProductOnCart = async (req, res) => {
     try {
-      const { cartId } = req.params;
+      const { userId, productId } = req.params;
       const product = req.body;
-      const updatedProduct = await this.products.updateProduct(cartId, product);
-      res.status(200).json(updatedProduct);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
-  deleteProductOnCart = async (req, res) => {
-    try {
-      const { cartId, productId } = req.params;
-      const product = await this.products.deleteProductOnCart(
-        cartId,
-        productId
-      );
-      res.status(200).json(product);
+      let updatedCart;
+      if (!Object.keys(product).length)
+        updatedCart = await removeProductFromCart(userId, productId);
+      else updatedCart = await updateProductOnCart(userId, productId, product);
+      res.status(200).json(updatedCart);
     } catch (err) {
-      console.log(err);
+      return res.status(400).json({ msg: err.message });
     }
   };
 
   deleteCart = async (req, res) => {
     try {
-      const { cartId } = req.params;
-      const cart = await this.products.deleteCart(cartId);
+      const { userId } = req.params;
+      const cart = await deleteCart(userId);
       res.status(200).json(cart);
     } catch (err) {
-      console.log(err);
+      return res.status(400).json({ msg: err.message });
     }
   };
 }

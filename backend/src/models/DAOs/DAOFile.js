@@ -18,16 +18,12 @@ class DAOFile {
   }
 
   async existItem(data) {
-    // {...data}
-    const items = this.getItems();
+    const items = await this.getItems();
 
     if (items && items.length) {
-      const item = items.some((i) => {
-        return Object.entries(data).forEach(([key, value]) => {
-          i[key] === value;
-        });
-      });
-      if (item) return true;
+      return items.some((i) =>
+        Object.entries(data).find(([key, value]) => i[key] === value)
+      );
     }
     return false;
   }
@@ -47,34 +43,43 @@ class DAOFile {
     return convertToDTO(item, this.collection);
   }
 
-  async saveItem(item, _options) {
+  async saveItem(item) {
     if (item) {
-      const id = await this.generateId();
+      const _id = await this.generateId();
       const itemToUpload = {
         ...item,
-        id,
-        _id: id,
+        _id: item._id || _id,
         timestamp: Date.now(),
       };
+
       const allItems = await this.getItems();
-      const allUpdatedItems = [...allItems, itemToUpload];
+
+      let allUpdatedItems;
+
+      if (this.collection === "carts") {
+        allUpdatedItems = [
+          ...allItems.filter((item) => item._id !== itemToUpload._id),
+          itemToUpload,
+        ];
+      } else {
+        allUpdatedItems = [...allItems, itemToUpload];
+      }
+
       await fs.promises
         .writeFile(this.path, JSON.stringify(allUpdatedItems))
-        .then((res) => {
-          return convertToDTO(itemToUpload, this.collection);
-        })
+        .then(() => convertToDTO(itemToUpload, this.collection))
         .catch((err) => {
-          console.log(`no se ha podido guardar, ${err}`);
+          return new Error(`no se ha podido guardar, ${err.message}`);
         });
     }
   }
 
   async updateItem(id, item) {
     const allItems = await this.getItems();
-    const itemToUpdate = allItems.find((item) => item.id === id);
+    const itemToUpdate = allItems.find((item) => item._id === id);
 
     if (itemToUpdate) {
-      const filteredItems = allItems.filter((item) => item.id !== id);
+      const filteredItems = allItems.filter((item) => item._id !== id);
       const newItems = [...filteredItems, { ...itemToUpdate, ...item }];
       await fs.promises
         .writeFile(this.path, JSON.stringify(newItems))
@@ -87,10 +92,10 @@ class DAOFile {
 
   async deleteItem(id) {
     const allItems = await this.getItems();
-    const itemToDelete = allItems.find((item) => item.id === id);
+    const itemToDelete = allItems.find((item) => item._id === id);
 
     if (itemToDelete) {
-      const updatedItems = allItems.filter((item) => item.id !== id);
+      const updatedItems = allItems.filter((item) => item._id !== id);
       await fs.promises
         .writeFile(this.path, JSON.stringify(updatedItems))
         .then((res) => {

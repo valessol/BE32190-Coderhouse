@@ -26,7 +26,7 @@ class ProductsController {
   getProductById = async (req, res) => {
     try {
       const { id } = req.params;
-      const product = await this.products.getProductById(Number(id));
+      const product = await this.products.getProductById(id);
       res.status(200).json(product);
     } catch (err) {
       //console.log(err);
@@ -48,10 +48,7 @@ class ProductsController {
     try {
       const { id } = req.params;
       const product = req.body;
-      const updatedProduct = await this.products.updateProduct(
-        Number(id),
-        product
-      );
+      const updatedProduct = await this.products.updateProduct(id, product);
       res.status(200).json(updatedProduct);
     } catch (err) {
       console.log(err);
@@ -61,7 +58,7 @@ class ProductsController {
   deleteProduct = async (req, res) => {
     try {
       const { id } = req.params;
-      const product = await this.products.deleteProduct(Number(id));
+      const product = await this.products.deleteProduct(id);
       res.status(200).json(product);
     } catch (err) {
       console.log(err);

@@ -1,46 +1,106 @@
-const AuthServices = require("../services/auth.js");
+const { compareSync } = require("bcrypt");
+const {
+  getAllUsers,
+  existUser,
+  registerUser,
+  loginUser,
+  checkUserAccountToken,
+  deleteUser,
+} = require("../services/auth.js");
+const { generateAuthToken } = require("../middlewares/auth.js");
 
 class Controller {
-  constructor() {
-    this.users = AuthServices;
-  }
+  constructor() {}
+
+  getAll = async (req, res) => {
+    try {
+      const users = await getAllUsers();
+      res.status(201).json(users);
+    } catch (error) {
+      res.json({ msg: error.message });
+    }
+  };
 
   registerUser = async (req, res) => {
     try {
-      const { email, password } = req.body;
+      const { email } = req.body;
+      const isRegisteredUser = await existUser({ email });
 
-      const isRegisteredUser = await this.users.existUser({
-        email,
-      });
+      if (isRegisteredUser) {
+        const error = new Error("Usuario ya registrado");
+        return res.status(400).json({ msg: error.message });
+      }
 
-      if (isRegisteredUser) return res.redirect("/register-error");
-
-      const access_token = await this.users.registerUser({ email, password });
-
+      await registerUser(req.body);
       res.status(201).json({
-        message: "usuario creado",
-        access_token: access_token.access_token,
+        msg: "Registro con éxito. Revisa tu bandeja de entrada para confirmar tu cuenta",
       });
     } catch (error) {
-      console.log(error);
+      res.json({ msg: error.message });
     }
   };
 
   login = async (req, res) => {
-    const { email, password } = req.body;
-    const access_token = await this.users.loginUser({ email, password });
+    try {
+      const { email, password } = req.body;
+      const userData = await loginUser({ email, password });
 
-    res.json({ ...access_token });
+      if (!userData) {
+        const error = new Error("El usuario no existe");
+        return res.status(404).json({ msg: error.message });
+      }
+
+      if (!userData.confirmed) {
+        const error = new Error("Tu cuenta no ha sido confirmada");
+        return res.status(403).json({ msg: error.message });
+      }
+
+      const isCheckedPassword = compareSync(password, userData.password);
+
+      if (!isCheckedPassword) {
+        const error = new Error("El password es incorrecto");
+        return res.status(403).json({ msg: error.message });
+      }
+      const user = {
+        _id: userData._id,
+        username: userData.username,
+        email: userData.email,
+        phone: userData.phone,
+        token: generateAuthToken({ _id: userData._id }),
+      };
+
+      res.json({ ...user });
+    } catch (error) {
+      return res.status(404).json({ msg: error.message });
+    }
   };
 
   authenticateUser = async (req, res) => {
-    const { id } = req.user;
-    const user = await this.users.getUserById(id);
+    const { user } = req;
+    res.json(user);
+  };
 
-    if (!user) return res.json({ error: "usuario no autenticado" });
+  checkAccountVerificationToken = async (req, res) => {
+    const { token } = req.params;
+    const confirmedUser = await checkUserAccountToken(token);
 
-    const { password: omit, ...rest } = user;
-    res.json({ user: rest });
+    if (!confirmedUser) {
+      const error = new Error("Token no válido");
+      return res.status(403).json({ msg: error.message });
+    }
+
+    res.json({ msg: "Usuario confirmado correctamente" });
+  };
+
+  delete = async (req, res) => {
+    try {
+      const { userId } = req.params;
+
+      await deleteUser(userId);
+      res.json({ msg: "Usuario eliminado correctamente" });
+    } catch (error) {
+      res.json({ msg: error.message });
+    }
   };
 }
 

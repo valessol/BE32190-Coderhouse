@@ -1,11 +1,12 @@
 class ProductDTO {
-  constructor({ title, price, stock, thumbnail, timestamp, _id }) {
+  constructor({ title, price, stock, url, description, category, _id }) {
     this._id = _id;
     this.title = title;
     this.price = price;
     this.stock = stock;
-    this.thumbnail = thumbnail;
-    this.timestamp = timestamp;
+    this.category = category;
+    this.url = url;
+    this.description = description;
   }
 }
 

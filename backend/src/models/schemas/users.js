@@ -5,6 +5,8 @@ const schema = {
   password: String,
   phone: Number,
   email: String,
+  token: String,
+  confirmed: Boolean,
   timestamp: String,
 };
 

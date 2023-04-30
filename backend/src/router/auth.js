@@ -1,24 +1,15 @@
 const { Router } = require("express");
 const AuthController = require("../controllers/auth.js");
-const { auth } = require("../middlewares/jwt.js");
-//const passport = require("../middlewares/passport.js");
+const { auth } = require("../middlewares/auth.js");
 
 const router = Router();
 
 const authController = new AuthController();
-
-// router.use(passport.initialize());
-// router.use(passport.session());
-
-// router.post(
-//   "/login",
-//   passport.authenticate("login", {
-//     failureRedirect: "/login-error",
-//     successRedirect: "/",
-//   })
-// );
 router.get("/", auth, authController.authenticateUser);
-router.post("/login", authController.login);
+router.get("/all", authController.getAll);
 router.post("/register", authController.registerUser);
+router.post("/login", authController.login);
+router.get("/confirm/:token", authController.checkAccountVerificationToken);
+router.delete("/:userId", authController.delete);
 
 module.exports = router;
