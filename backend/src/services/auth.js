@@ -58,7 +58,6 @@ const registerUser = async (userData) => {
     }
 
     const savedUser = await services.saveItem(newUser, { email });
-    // TODO: sacar los datos sensibles del usuario y enviar mail
     return savedUser;
   } catch (err) {
     throw new Error(err);
@@ -78,12 +77,11 @@ const loginUser = async (userData) => {
 const checkUserAccountToken = async (token) => {
   const users = await services.getItems();
   const user = users.find((user) => user.token === token);
-
   if (user) {
     try {
       user.confirmed = true;
       user.token = "";
-      const updatedUser = await services.saveItem(user, { email: user.email });
+      const updatedUser = await services.updateItem(user._id, user);
       return updatedUser;
     } catch (error) {
       console.log(error);
@@ -91,33 +89,9 @@ const checkUserAccountToken = async (token) => {
   }
 };
 
-// const checkActiveSession = async (token) => {
-//   try {
-//     const { email, password } = userData;
-//     const salt = await genSalt(10);
-//     const hash = await getHash(password, salt);
-
-//     const newUser = setDefaultAttr({
-//       ...userData,
-//       password: hash,
-//     });
-
-//     if (!validateUser(newUser)) {
-//       return new Error("formato de usuario inválido");
-//     }
-
-//     const savedUser = await services.saveItem(newUser, { email });
-//     // TODO: sacar los datos sensibles del usuario y enviar mail
-//     return savedUser;
-//   } catch (err) {
-//     throw new Error(err);
-//   }
-// };
-
 module.exports = {
   existUser,
   registerUser,
   loginUser,
   checkUserAccountToken,
-  // checkActiveSession,
 };
