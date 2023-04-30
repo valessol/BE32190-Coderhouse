@@ -77,7 +77,11 @@ class Controller {
 
   authenticateUser = async (req, res) => {
     const { user } = req;
-    res.json(user);
+    const allUsers = await getAllUsers();
+    const authorizedUser = allUsers.find(
+      (authUser) => authUser._id === user._id
+    );
+    res.json(authorizedUser);
   };
 
   checkAccountVerificationToken = async (req, res) => {
