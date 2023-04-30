@@ -105,7 +105,7 @@ const Register = () => {
           ) : (
             <button
               type="submit"
-              className="bg-amber-500 w-full py-3 my-5 text-white uppercase font-bold rounded hover:cursor-pointer hover:bg-sky-800 transition-colors"
+              className="bg-amber-500 w-full py-3 my-5 text-white uppercase font-bold rounded hover:cursor-pointer hover:bg-amber-700 transition-colors"
             >
               {registerFormConfig.submitText}
             </button>
@@ -115,7 +115,7 @@ const Register = () => {
         <nav className="lg:flex lg:justify-between">
           <Link
             to={registerFormConfig.linkUrl}
-            className="block text-center my-5 text slate-500 uppercase text-lg"
+            className="block text-center my-5 text amber-500 uppercase text-lg"
           >
             {registerFormConfig.linkText}
           </Link>
