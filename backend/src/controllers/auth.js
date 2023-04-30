@@ -52,10 +52,10 @@ class Controller {
       }
       const user = {
         _id: userData._id,
-        username: userData.name,
+        username: userData.username,
         email: userData.email,
         phone: userData.phone,
-        token: generateAuthToken({ id: userData._id }),
+        token: generateAuthToken({ _id: userData._id }),
       };
 
       res.json({ ...user });
@@ -71,6 +71,7 @@ class Controller {
 
   checkAccountVerificationToken = async (req, res) => {
     const { token } = req.params;
+    console.log(token);
     const confirmedUser = await checkUserAccountToken(token);
 
     if (!confirmedUser) {

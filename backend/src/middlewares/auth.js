@@ -22,7 +22,6 @@ const auth = (req, res, next) => {
       return res.status(403).json({ msg: "No autorizado" });
     }
     req.user = decoded.data;
-    //TODO: quitar datos sensibles de ususario
     next();
   });
 };
