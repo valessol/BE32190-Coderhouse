@@ -9,8 +9,6 @@ class DAOMongo {
     this.collection = collection;
 
     (async () => {
-      console.log("Conectando a la base de datos de Mongo DB...");
-
       mongoose.connect(config.MONGO_DATA_BASE_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true,

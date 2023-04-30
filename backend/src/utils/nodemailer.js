@@ -2,7 +2,6 @@ const nodemailer = require("nodemailer");
 const config = require("../../config");
 
 const sendConfirmEmail = async (email, username, token) => {
-  console.log(email, username, token);
   let transporter = nodemailer.createTransport({
     service: "smtp.ethereal.email",
     port: 587,
@@ -27,7 +26,6 @@ const sendConfirmEmail = async (email, username, token) => {
 
   try {
     const info = await transporter.sendMail(emailContent);
-    console.log(info);
   } catch (error) {
     return {
       msg: `Hubo un error al intentar enviar el correo de confirmación: ${error}`,

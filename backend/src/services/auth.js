@@ -51,7 +51,6 @@ const generateAccountToken = () => {
 };
 
 const registerUser = async (userData) => {
-  console.log(userData);
   try {
     const { email, password } = userData;
     const salt = await genSalt(10);
