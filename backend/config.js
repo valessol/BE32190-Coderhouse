@@ -1,9 +1,14 @@
 const { config } = require("dotenv");
 const path = require("path");
+const parseArgs = require("minimist");
 
-const envFileName = `${
-  process.env.NODE_ENV ? process.env.NODE_ENV : "development"
-}.env`;
+const options = {
+  alias: { e: "environment" },
+  default: { environment: "development" },
+};
+const { environment } = parseArgs(process.argv.slice(2), options);
+
+const envFileName = `${environment}.env`;
 
 if (envFileName === "development.env")
   config({
@@ -11,7 +16,7 @@ if (envFileName === "development.env")
   });
 
 module.exports = {
-  NODE_ENV: process.env.NODE_ENV || "development",
+  NODE_ENV: environment || "development",
   PORT: process.env.PORT || 8080,
   MONGO_DATA_BASE_URL: process.env.MONGO_DATA_BASE_URL,
   PERSISTENCE: process.env.PERSISTENCE || "file",
