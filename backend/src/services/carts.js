@@ -113,7 +113,6 @@ const updateProductOnCart = async (userId, productId, product) => {
 };
 
 const removeProductFromCart = async (userId, productId) => {
-  console.log("remove");
   try {
     const cart = await getCartByUserId(userId);
 
@@ -124,6 +123,22 @@ const removeProductFromCart = async (userId, productId) => {
     const newCart = {
       ...cart,
       products: [...filteredProducts],
+    };
+
+    await persistence.updateItem(cart._id, newCart);
+    return newCart;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const removeAllProductsFromCart = async (userId) => {
+  try {
+    const cart = await getCartByUserId(userId);
+
+    const newCart = {
+      ...cart,
+      products: [],
     };
 
     await persistence.updateItem(cart._id, newCart);
@@ -153,5 +168,6 @@ module.exports = {
   getCartById,
   updateProductOnCart,
   removeProductFromCart,
+  removeAllProductsFromCart,
   deleteCart,
 };
