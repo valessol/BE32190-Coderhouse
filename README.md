@@ -59,7 +59,7 @@ npm run dev
 ```
 ### Levantar el frontend:
 ```
-cd fontend
+cd frontend
 npm install
 npm run dev
 ```
