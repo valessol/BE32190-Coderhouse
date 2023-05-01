@@ -16,6 +16,8 @@
 
 **GuitarLA** (_Guitar Los Ángeles_) es un ecommerce de venta de guitarras, realizado enteramente con el stack MERN, como proyecto final para el curso de Programación Backend de Coderhouse, en su parte backend, y como parte del curso React - La Guía Completa de Juan Pablo de la Torre Valdez en Udemy.
 
+![](Animation.gif)
+
 ## Características del proyecto Backend 📌
 
 - Desarrollo de la arquitectura del servidor en base a capas MVC definidas, con capa de ruteo, controladores, lógica de negocio, validaciones y capa de persistencia.
