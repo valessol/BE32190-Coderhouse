@@ -46,10 +46,20 @@
 El flujo de un usuario dentro de la aplicación considera que el mismo puede interactuar por la página de productos (inicio), así como el detalle de los mismos sin autenticarse. Sin embargo, para el acceso a las rutas protegidas (agregar productos, editar el carrito o eliminar productos del carrito), éste deberá primero loguearse (o registrarse).
 
 ## Instalación 📌
-
 ```
 git clone https://github.com/valessol/BE32190-Coderhouse.git
 cd BE32190-Coderhouse.git
+```
+
+### Levantar el backend:
+```
+cd backend
+npm install
+npm run dev
+```
+### Levantar el frontend:
+```
+cd fontend
 npm install
 npm run dev
 ```
