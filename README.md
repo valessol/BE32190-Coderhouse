@@ -75,7 +75,7 @@ A continuación se listan los endpoint correspondientes, junto con una breve des
 | `/`      | GET      | Obtener todos los productos   | No   | -                                                                                                                                                                                                       |
 | `/:id`   | GET      | Obtener un producto por su Id | No   | -                                                                                                                                                                                                       |
 | `/`      | POST     | Guardar un producto           | Sí   | `{ "title": "Blackmore", "price": 359, "description": "Ut malesuada vitae neque sit amet congue. Suspendisse potenti. Mauris …", "url": "guitarra_12_xzmjnz", "stock": 8, "category": "instrumentos" }` |
-| `/:id`   | PUT      | Actualizar un producto        | Sí   | -                                                                                                                                                                                                       |
+| `/:id`   | PUT      | Actualizar un producto        | Sí   | `{ "price": 389 }`                                                                                                                                                                                      |
 | `/:id`   | DELETE   | Eliminar un producto          | Sí   | -                                                                                                                                                                                                       |
 
 ### `/api/cart`
