@@ -16,7 +16,7 @@ if (envFileName === "development.env")
   });
 
 module.exports = {
-  NODE_ENV: environment || "development",
+  NODE_ENV: process.env.NODE_ENV || environment || "development",
   PORT: process.env.PORT || 8080,
   MONGO_DATA_BASE_URL: process.env.MONGO_DATA_BASE_URL,
   PERSISTENCE: process.env.PERSISTENCE || "file",
@@ -29,4 +29,6 @@ module.exports = {
   MAIL_ADDRESS: process.env.MAIL_ADDRESS,
   MAIL_PASS: process.env.MAIL_PASS,
   FRONTEND_URL: process.env.FRONTEND_URL,
+  SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
+  SENDGRID_USER: process.env.SENDGRID_USER,
 };

@@ -66,6 +66,7 @@ const Register = () => {
         phone,
       });
       setAlert({ msg: data.msg, type: "success" });
+      setValues({ username: "", email: "", password: "", phone: "" });
     } catch (error) {
       setAlert({ msg: error.response.data.msg, type: "error" });
     }

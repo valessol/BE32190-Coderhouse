@@ -51,10 +51,10 @@ class Controller {
         return res.status(404).json({ msg: error.message });
       }
 
-      // if (!userData.confirmed) {
-      //   const error = new Error("Tu cuenta no ha sido confirmada");
-      //   return res.status(403).json({ msg: error.message });
-      // }
+      if (!userData.confirmed) {
+        const error = new Error("Tu cuenta no ha sido confirmada");
+        return res.status(403).json({ msg: error.message });
+      }
 
       const isCheckedPassword = compareSync(password, userData.password);
 
@@ -89,7 +89,7 @@ class Controller {
     const { token } = req.params;
     const confirmedUser = await checkUserAccountToken(token);
 
-    if (!confirmedUser) {
+    if (!confirmedUser?._id) {
       const error = new Error("Token no válido");
       return res.status(403).json({ msg: error.message });
     }

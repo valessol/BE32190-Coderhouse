@@ -3,7 +3,7 @@ const { hash: getHash, genSalt } = require("bcrypt");
 const DAOFactory = require("../models/DAOs/DAOFactory.js");
 const usersSchema = require("../models/schemas/users.js");
 const User = require("../models/model/User.js");
-const sendConfirmEmail = require("../utils/nodemailer.js");
+const sendConfirmEmail = require("../utils/sendgrid.js");
 
 const services = DAOFactory.get("users", usersSchema);
 

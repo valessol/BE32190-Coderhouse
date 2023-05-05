@@ -16,7 +16,7 @@ const ConfirmAccount = () => {
 
   const confirmAccount = async () => {
     try {
-      const { data } = await axiosClient(`/auth/confirm-account/${id}`);
+      const { data } = await axiosClient(`/auth/confirm/${id}`);
       setAlert({ msg: data.msg, type: "success" });
       setLoading(true);
       setTimeout(() => {
@@ -30,7 +30,7 @@ const ConfirmAccount = () => {
 
   return (
     <>
-      <h1 className="text-sky-600 font-black text-6xl capitalize">
+      <h1 className="text-amber-500 font-black text-6xl capitalize">
         Confirma tu cuenta
       </h1>
       <div>{alert.msg && <Alert alert={alert} />}</div>
