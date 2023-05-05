@@ -12,7 +12,23 @@
 </table>
 </div>
 
-## Introducción 📌
+**Tabla de contenidos**
+
+  - [Introducción](#introduccion)
+  - [Backend URL](#backend-deployment-url)
+  - [Frontend URL](#frontend-deployment-url)
+  - [Características del proyecto Backend](#características-del-proyecto-Backend)
+  - [Tecnologías utilizadas](#tecnologias-utilizadas)
+  - [Flujo del usuario](#flujo-del-usuario)
+  - [Instalación](#instalacion)
+    - [Backend](#levantar-el-backend)
+    - [Frontend](#levantar-el-frontend)
+  - [Uso](#uso)
+    - [api/auth](#apiauth)
+    - [api/products](#apiproducts)
+    - [api/cart](#apicart)
+
+## Introducción📌
 
 **GuitarLA** (_Guitar Los Ángeles_) es un ecommerce de venta de guitarras, realizado enteramente con el stack MERN, como proyecto final para el curso de Programación Backend de Coderhouse, en su parte backend, y como parte del curso React - La Guía Completa de Juan Pablo de la Torre Valdez en Udemy.
 
@@ -26,7 +42,7 @@ https://guitarla-backend-cfsg.onrender.com/
 
 https://willowy-cobbler-ebd376.netlify.app/
 
-## Características del proyecto Backend 📌
+## Características del proyecto Backend📌
 
 - Desarrollo de la arquitectura del servidor en base a capas MVC definidas, con capa de ruteo, controladores, lógica de negocio, validaciones y capa de persistencia.
 - Persistencia mediante File System para el desarrollo local, y uso de bases de datos con Mongo Atlas para el ambiente de producción.
@@ -36,7 +52,7 @@ https://willowy-cobbler-ebd376.netlify.app/
 - Ruteo para el listado de productos, así como su agregado a la base de datos, edición y eliminación
 - Lo mismo para la interacción con el carrito de compras permitiendo crear un carrito, añadirle productos, remover productos o modificarlos, y eliminar el carrito.
 
-## Tecnologías utilizadas 📌
+## Tecnologías utilizadas📌
 
 - NodeJS
 - Express JS
@@ -49,11 +65,11 @@ https://willowy-cobbler-ebd376.netlify.app/
 - Json Web Token
 - Minimist
 
-## Flujo del usuario 📌
+## Flujo del usuario📌
 
 El flujo de un usuario dentro de la aplicación considera que el mismo puede interactuar por la página de productos (inicio), así como el detalle de los mismos sin autenticarse. Sin embargo, para el acceso a las rutas protegidas (agregar productos, editar el carrito o eliminar productos del carrito), éste deberá primero loguearse (o registrarse).
 
-## Instalación 📌
+## Instalación📌
 ```
 git clone https://github.com/valessol/BE32190-Coderhouse.git
 cd BE32190-Coderhouse.git
@@ -72,7 +88,7 @@ npm install
 npm run dev
 ```
 
-## Uso 📌
+## Uso📌
 
 A continuación se listan los endpoint correspondientes, junto con una breve descripción, y en caso de corresponder, un ejemplo del body que reciben. También se indica en la columna "Auth", si la ruta debe ser authorizada por JWT antes de llegar al controlador.
 
