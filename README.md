@@ -14,13 +14,13 @@
 
 **Tabla de contenidos**
 
-  - [Introducción](#introduccion)
+  - [Introducción](#introducción)
   - [Backend URL](#backend-deployment-url)
   - [Frontend URL](#frontend-deployment-url)
-  - [Características del proyecto Backend](#características-del-proyecto-Backend)
-  - [Tecnologías utilizadas](#tecnologias-utilizadas)
+  - [Características del proyecto Backend](#características-del-proyecto-backend)
+  - [Tecnologías utilizadas](#tecnologías-utilizadas)
   - [Flujo del usuario](#flujo-del-usuario)
-  - [Instalación](#instalacion)
+  - [Instalación](#instalación)
     - [Backend](#levantar-el-backend)
     - [Frontend](#levantar-el-frontend)
   - [Uso](#uso)
