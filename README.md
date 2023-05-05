@@ -69,6 +69,14 @@ https://willowy-cobbler-ebd376.netlify.app/
 
 El flujo de un usuario dentro de la aplicación considera que el mismo puede interactuar por la página de productos (inicio), así como el detalle de los mismos sin autenticarse. Sin embargo, para el acceso a las rutas protegidas (agregar productos, editar el carrito o eliminar productos del carrito), éste deberá primero loguearse (o registrarse).
 
+### Credenciales
+
+Para agregar productos al carrito, puede registrar un nuevo usuario, o bien loguearse mediante las siguientes credenciales:
+```
+user: test@mail.com
+password: 123456
+```
+
 ## Instalación📌
 ```
 git clone https://github.com/valessol/BE32190-Coderhouse.git
