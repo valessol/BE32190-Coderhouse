@@ -5,6 +5,7 @@ const {
   productsRouter,
   cartsRouter,
   authRouter,
+  blogRouter,
 } = require("./router/index.js");
 const config = require("../config.js");
 
@@ -34,6 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/cart", cartsRouter);
+app.use("/api/blog", blogRouter);
 
 app.use((err, req, res, next) => {
   if (err) {
