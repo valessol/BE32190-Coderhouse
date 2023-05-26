@@ -1,17 +1,7 @@
 import { Link } from "react-router-dom";
 
-const Product = ({ product }) => {
-  // const {id} = useParams()
-  // const {product, getProductById} = useContext(ProductsContext)
-
-  // useEffect(() => {
-  //   getProduct();
-  // }, [])
-
-  // const getProduct = async () => {
-  //   await getProductById(id)
-  // }
-  const { _id, description, price, title, imageUrl } = product;
+const Product = ({ data }) => {
+  const { _id, description, price, title, imageUrl } = data;
 
   return (
     <div className="grid gap-8 grid-cols-[2fr_3fr] items-center max-w-6xl my-0 mx-auto ">

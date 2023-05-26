@@ -11,6 +11,8 @@ import ProtectedRoutes from "./layout/ProtectedRoutes";
 import Cart from "./pages/Cart";
 import "./index.css";
 import ProductsProvider from "./context/ProductsContext";
+import Blog from "./pages/Blog";
+import Post from "./pages/Post";
 
 function App() {
   return (
@@ -25,12 +27,9 @@ function App() {
                 <Route path="registrar" element={<Register />} />
                 <Route path="confirmar/:id" element={<ConfirmAccount />} />
                 <Route path="tienda/:id" element={<ProductDetail />} />
+                <Route path="blog" element={<Blog />} />
+                <Route path="blog/:id" element={<Post />} />
               </Route>
-
-              {/* <Route path="/tienda" element={<Layout />}>
-                <Route index element={<Store />} />
-              </Route> */}
-
               <Route path="/carrito" element={<ProtectedRoutes />}>
                 <Route index element={<Cart />} />
               </Route>
@@ -43,4 +42,3 @@ function App() {
 }
 
 export default App;
-

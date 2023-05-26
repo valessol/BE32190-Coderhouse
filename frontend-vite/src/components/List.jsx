@@ -1,6 +1,5 @@
-import Product from "./Product";
-
-const ProductsList = ({ data, title }) => {
+const List = ({ data, options }) => {
+  const { title, Component } = options;
   return (
     <>
       <h2 className="text-6xl text-center font-black text-amber-500 mt-0 mb-20 mx-0">
@@ -9,8 +8,8 @@ const ProductsList = ({ data, title }) => {
 
       {data?.length && (
         <div className="grid gap-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {data.map((prod) => (
-            <Product key={prod.url} product={prod} />
+          {data.map((d) => (
+            <Component key={d.url} data={d} />
           ))}
         </div>
       )}
@@ -18,4 +17,4 @@ const ProductsList = ({ data, title }) => {
   );
 };
 
-export default ProductsList;
+export default List;
