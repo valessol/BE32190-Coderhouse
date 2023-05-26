@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { routesConfig } from "../constants/routes";
 import { Link, useLocation } from "react-router-dom";
 
-const Navigation = () => {
+const Navigation = ({ items, showActive }) => {
   const [navItems, setNavItems] = useState("");
   const location = useLocation();
 
@@ -11,14 +10,14 @@ const Navigation = () => {
   }, [location.pathname]);
 
   const setActiveClassName = () => {
-    const navConfig = routesConfig.map(({ path, label, image }) => {
+    const navConfig = items.map(({ path, label, image }) => {
       let active = "";
       if (path === location.pathname) active = "active";
       return {
         path,
         label,
         image,
-        active,
+        active: showActive ? active : "",
       };
     });
     setNavItems(navConfig);
@@ -31,7 +30,7 @@ const Navigation = () => {
             key={nav.path}
             to={nav.path}
             className={`font-bold text-3xl text-white uppercase decoration-none p-2 transition-colors ${
-              nav.active ? "bg-[#e99401]" : ""
+              nav.active ? "bg-[#e99401]" : "bg-slate-800/50"
             } hover:bg-[#e99401]`}
           >
             {nav.label ? nav.label : ""}

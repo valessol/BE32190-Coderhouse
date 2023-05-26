@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import SubNavigation from "./SubNavigation";
+import { routesConfig } from "../constants/routes";
 import Navigation from "./navigation";
 
 const Header = () => {
@@ -21,7 +22,7 @@ const Header = () => {
           <Link to="/">
             <img className="w-96" src={logo} alt="imagen logo" />
           </Link>
-          <Navigation />
+          <Navigation items={routesConfig} showActive />
         </div>
       </div>
     </header>
