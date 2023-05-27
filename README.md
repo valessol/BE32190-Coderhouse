@@ -61,6 +61,8 @@ https://willowy-cobbler-ebd376.netlify.app/
   - agregar productos al carrito, 
   - modificar la cantidad seleccionada, 
   - eliminar productos del carrito.
+- Context
+- Ruta de carrito protegida
 
 ## Tecnologías utilizadas Backend📌
 
