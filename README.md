@@ -18,7 +18,9 @@
   - [Backend URL](#backend-deployment-url)
   - [Frontend URL](#frontend-deployment-url)
   - [Características del proyecto Backend](#características-del-proyecto-backend)
-  - [Tecnologías utilizadas](#tecnologías-utilizadas)
+  - [Características del proyecto Frontend](#características-del-proyecto-frontend)
+  - [Tecnologías utilizadas Backend](#tecnologías-utilizadas-backend)
+  - [Tecnologías utilizadas Frontend](#tecnologías-utilizadas-frontend)
   - [Flujo del usuario](#flujo-del-usuario)
   - [Instalación](#instalación)
     - [Backend](#levantar-el-backend)
@@ -31,8 +33,6 @@
 ## Introducción📌
 
 **GuitarLA** (_Guitar Los Ángeles_) es un ecommerce de venta de guitarras, realizado enteramente con el stack MERN, como proyecto final para el curso de Programación Backend de Coderhouse, en su parte backend, y como parte del curso React - La Guía Completa de Juan Pablo de la Torre Valdez en Udemy.
-
-![](Animation.gif)
 
 ## Backend deployment URL📌
 
@@ -53,7 +53,16 @@ https://willowy-cobbler-ebd376.netlify.app/
 - Ruteo para el listado de productos, así como su agregado a la base de datos, edición y eliminación
 - Lo mismo para la interacción con el carrito de compras permitiendo crear un carrito, añadirle productos, remover productos o modificarlos, y eliminar el carrito.
 
-## Tecnologías utilizadas📌
+## Características del proyecto Frontend📌
+
+- Registro y login de usuarios con confirmación de cuenta registrada.
+- Validación en formularios
+- Carrito de compras: 
+  - agregar productos al carrito, 
+  - modificar la cantidad seleccionada, 
+  - eliminar productos del carrito.
+
+## Tecnologías utilizadas Backend📌
 
 - NodeJS
 - Express JS
@@ -66,6 +75,15 @@ https://willowy-cobbler-ebd376.netlify.app/
 - Json Web Token
 - Minimist
 - Sendgrid
+
+## Tecnologías utilizadas Frontend📌
+
+- React
+- Vite
+- Axios
+- Headless UI
+- React Router Dom v6
+- TailwindCss
 
 ## Flujo del usuario📌
 
