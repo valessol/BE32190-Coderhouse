@@ -177,7 +177,7 @@ const CartProvider = ({ children }) => {
         0
       );
       setTotal(newTotal);
-    }
+    } else setTotal(0);
   };
 
   return (
