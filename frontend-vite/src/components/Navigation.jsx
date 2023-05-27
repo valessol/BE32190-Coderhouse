@@ -23,7 +23,7 @@ const Navigation = ({ items, showActive }) => {
     setNavItems(navConfig);
   };
   return (
-    <nav className="flex items-center gap-8">
+    <nav className="flex items-center gap-8 justify-center">
       {navItems &&
         navItems.map((nav) => (
           <Link

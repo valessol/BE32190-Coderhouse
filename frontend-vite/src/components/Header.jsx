@@ -18,7 +18,7 @@ const Header = () => {
           }/GuitarLA/cursos_bg_phjenp.jpg')`,
         }}
       >
-        <div className="min-w-[95%] mx-auto flex items-center gap-8 justify-between">
+        <div className="min-w-[95%] mx-auto flex items-center gap-8 justify-between flex-col md:flex-row">
           <Link to="/">
             <img className="w-96" src={logo} alt="imagen logo" />
           </Link>
